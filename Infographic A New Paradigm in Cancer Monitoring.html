@@ -93,7 +93,7 @@
         <section id="timeline" class="mb-20">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-deep-blue">The Power of Integration: See the Trend, Optimize Therapy</h2>
-                <p class="max-w-4xl mx-auto text-lg leading-relaxed mt-2">By tracking CTC dynamics alongside PET/CT results, we shift clinical care from reactive to predictive. The line chart below illustrates a typical patient journey, revealing insights often hidden from imaging alone.</p>
+                <p class="max-w-4xl mx-auto text-lg leading-relaxed mt-2">By correlating the real-time cellular dynamics from CTC analysis with the crucial metabolic map from PET/CT, we build a more complete clinical picture. The line chart below demonstrates how CTC trends provide a dynamic narrative that enriches the anatomical insights from imaging, shifting clinical care from reactive to predictive.</p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-xl">
                 <div class="chart-container">
@@ -101,13 +101,13 @@
                 </div>
                 <div class="mt-8 grid md:grid-cols-3 gap-6 text-sm">
                     <div class="p-4 bg-gray-50 rounded">
-                        <strong class="text-mid-blue">1. Complete Baseline:</strong> High metabolic activity on PET/CT is correlated with high CTC counts, confirming an aggressive disease profile that requires immediate action.
+                        <strong class="text-mid-blue">1. Complete Baseline:</strong> High metabolic activity on PET/CT is correlated with high CTC counts, confirming an aggressive disease profile. Recent work in NSCLC shows that combining Total Lesion Glycolysis with CTC enumeration improves diagnostic AUC to 0.90 versus 0.81 for PET/CT alone.¹
                     </div>
                     <div class="p-4 bg-gray-50 rounded">
-                        <strong class="text-mid-blue">2. Confirm Early Response:</strong> A sharp decline in CTCs provides a very early signal of treatment efficacy, building confidence weeks before changes are typically visible on a follow-up scan.
+                        <strong class="text-mid-blue">2. Confirm Early Response:</strong> A sharp decline in CTCs provides an early signal of treatment efficacy. In metastatic breast cancer, patients whose CTC count falls below 5 cells/7.5 mL by week 12 enjoy markedly longer overall survival.²
                     </div>
                     <div class="p-4 bg-gray-50 rounded">
-                        <strong class="text-mid-blue">3. Detect Resistance Sooner:</strong> A rise in CTCs, despite a stable PET scan, serves as a critical early warning for emergent resistance, creating a vital opportunity to adapt the therapeutic strategy proactively.
+                        <strong class="text-mid-blue">3. Detect Resistance Sooner:</strong> A rise in CTCs, despite a stable PET scan, serves as a critical early warning. Conversely, a rebound to ≥ 5 CTCs is an early harbinger of therapeutic resistance.²
                     </div>
                 </div>
             </div>
@@ -137,9 +137,20 @@
     </main>
 
     <footer class="bg-deep-blue mt-20">
-        <div class="container mx-auto py-6 px-6 text-center text-white">
+        <div class="container mx-auto py-8 px-6 text-center text-white">
             <p class="text-xl font-semibold">Let's lead the future of precision oncology with dynamic, multi-dimensional assessment.</p>
-            <p class="text-md mt-2 opacity-80">Official Web: https://www.goodfuturebio.com | E-mail: info@gfmed.cc | WhatsAPP: +886-920-296231 </p>
+            <div class="text-md mt-6 opacity-90 flex flex-wrap justify-center items-center gap-x-4 gap-y-2">
+                <span>Official Web: <a href="https://www.goodfuturebio.com" target="_blank" rel="noopener noreferrer" class="hover:underline">https://www.goodfuturebio.com</a></span>
+                <span class="hidden md:inline opacity-50">|</span>
+                <span>E-mail: <a href="mailto:info@gfmed.cc" class="hover:underline">info@gfmed.cc</a></span>
+                <span class="hidden md:inline opacity-50">|</span>
+                <span>WhatsAPP: <a href="https://wa.me/886920296231" target="_blank" rel="noopener noreferrer" class="hover:underline">+886-920-296231</a></span>
+            </div>
+			<div class="mt-6 pt-6 border-t border-blue-800 text-xs opacity-70 max-w-4xl mx-auto">
+                <p class="mb-2"><strong>References:</strong></p>
+                <p>¹ Zhang J et al. Combination of circulating tumor cells and 18F-FDG PET/CT for diagnostic and biological stratification in NSCLC. Cancer Medicine. 2024.</p>
+                <p>² Bidard F-C et al. Circulating tumor cells and 18F-FDG PET/CT for outcome prediction in metastatic breast cancer. J Clin Oncol. 2009.</p>
+            </div>
         </div>
     </footer>
 
