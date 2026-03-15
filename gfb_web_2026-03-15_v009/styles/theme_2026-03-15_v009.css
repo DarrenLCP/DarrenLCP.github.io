@@ -1029,6 +1029,20 @@ body[data-page="home"] #home-hero .hero__support {
   color: var(--ink-soft);
 }
 
+.service-use-case-card {
+  gap: 0.9rem;
+}
+
+.service-use-case-card__media {
+  padding: 0.85rem 0.85rem 0.1rem;
+  background: linear-gradient(180deg, rgba(250, 248, 252, 0.96), rgba(243, 236, 247, 0.88));
+}
+
+.service-use-case-card__media img {
+  height: 11rem;
+  object-fit: contain;
+}
+
 .report-preview__caption strong {
   color: var(--ink);
   font-weight: 800;
