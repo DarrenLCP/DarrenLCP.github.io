@@ -1524,6 +1524,48 @@ body[data-page="home"] #home-hero .hero__support {
   margin-bottom: 0.85rem;
 }
 
+.footer__contact-list {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.footer__contact-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.15rem;
+  row-gap: 0.1rem;
+}
+
+.footer__contact-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  line-height: 1.45;
+}
+
+.footer__contact-value,
+.footer__contact-link {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.footer__contact-link {
+  text-decoration: none;
+}
+
+.footer__contact-link:hover,
+.footer__contact-link:focus-visible {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
 .footer__list {
   display: grid;
   gap: 0.5rem;

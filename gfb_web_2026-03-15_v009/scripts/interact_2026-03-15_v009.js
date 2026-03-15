@@ -170,14 +170,30 @@ function buildFooter() {
   return `
     <footer class="footer">
       <div class="container">
-        <div class="footer__grid">
-          <div class="footer__brand">
-            <img class="footer__brand-logo" src="${asset("brand_logo_bottom_2026-03-15_v009.png")}" alt="榮文生醫 Good Future BioMed" />
-            <p class="footer__copy">榮文生醫精準醫學實驗室提供循環腫瘤細胞檢測、合作抽血據點查詢與健康產品資訊。</p>
-            <p class="footer__copy">333 桃園市龜山區公園路30號6樓｜03-3278501｜0800-222-260｜info@gfmed.cc</p>
+          <div class="footer__grid">
+            <div class="footer__brand">
+              <img class="footer__brand-logo" src="${asset("brand_logo_bottom_2026-03-15_v009.png")}" alt="榮文生醫 Good Future BioMed" />
+              <ul class="footer__contact-list" aria-label="榮文生醫聯絡資訊">
+                <li class="footer__contact-item">
+                  <span class="footer__contact-label">地址：</span>
+                  <span class="footer__contact-value">333 桃園市龜山區公園路30號6樓</span>
+                </li>
+                <li class="footer__contact-item">
+                  <span class="footer__contact-label">電話：</span>
+                  <a class="footer__contact-link" href="tel:033278501">03-3278501</a>
+                </li>
+                <li class="footer__contact-item">
+                  <span class="footer__contact-label">客服專線：</span>
+                  <a class="footer__contact-link" href="tel:0800222260">0800-222-260</a>
+                </li>
+                <li class="footer__contact-item">
+                  <span class="footer__contact-label">Email：</span>
+                  <a class="footer__contact-link" href="mailto:info@gfmed.cc">info@gfmed.cc</a>
+                </li>
+              </ul>
+            </div>
+            ${groups}
           </div>
-          ${groups}
-        </div>
         <div class="footer__legal">Copyright © 榮文生醫 Good Future BioMed. Inc. All Rights Reserved.</div>
       </div>
     </footer>
