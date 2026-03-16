@@ -713,10 +713,10 @@
 
           // Achievement check moved inside correct answer block
           gameData.achievements.forEach(ach => {
-              if (!unlockedAchievements.find(ua => ua.id === ach.id) && ach.condition(role, levelIndex, false)) {
+              if (!unlockedAchievements.find(ua => ua.id === ach.id) && ach.condition(role, levelIndex + 1, false)) {
                   setUnlockedAchievements(prev => [...prev, ach]);
-                  setCurrentToast(ach); 
-                  setNarratorText(gameData.narratorComments.achievement); 
+                  setCurrentToast(ach);
+                  setNarratorText(gameData.narratorComments.achievement);
               }
           });
 
