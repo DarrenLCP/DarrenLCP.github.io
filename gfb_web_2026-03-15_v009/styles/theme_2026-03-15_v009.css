@@ -867,6 +867,11 @@ body[data-page="home"] #home-hero .hero__support {
   display: none !important;
 }
 
+body[data-page="products"] .tabpanel .section__title {
+  font-size: clamp(1.55rem, 1.2rem + 0.9vw, 2.15rem);
+  line-height: 1.2;
+}
+
 .timeline {
   display: grid;
   gap: 1rem;
