@@ -1483,6 +1483,7 @@ body[data-page="products"] .tabpanel .section__title {
   background: transparent;
   text-align: left;
   font-size: 1rem;
+  color: var(--ink);
 }
 
 .faq__button::after {
@@ -1497,6 +1498,8 @@ body[data-page="products"] .tabpanel .section__title {
 
 .faq__panel {
   padding: 0 1.1rem 1.1rem;
+  color: var(--ink-soft);
+  line-height: 1.75;
 }
 
 .video-card iframe {
