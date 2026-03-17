@@ -1484,6 +1484,7 @@ body[data-page="products"] .tabpanel .section__title {
   text-align: left;
   font-size: 1rem;
   color: var(--ink);
+  font-weight: 800;
 }
 
 .faq__button::after {
@@ -1500,6 +1501,23 @@ body[data-page="products"] .tabpanel .section__title {
   padding: 0 1.1rem 1.1rem;
   color: var(--ink-soft);
   line-height: 1.75;
+}
+
+body[data-page="services"] .faq {
+  border: 1px solid rgba(126, 90, 181, 0.14);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+body[data-page="services"] .faq__button {
+  color: var(--ink);
+}
+
+body[data-page="services"] .faq__panel {
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(126, 90, 181, 0.12);
+  background: linear-gradient(180deg, rgba(248, 243, 250, 0.86), rgba(255, 255, 255, 0.98));
+  color: var(--primary-deep);
+  font-weight: 600;
 }
 
 .video-card iframe {
