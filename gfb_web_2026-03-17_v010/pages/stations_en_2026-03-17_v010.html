@@ -1,0 +1,86 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blood drawing base｜Good Future</title>
+    <meta name="description" content="Search Good Future cooperative blood collection sites by county, city and region, and quickly screen out 59 cooperative site information.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="../styles/theme_2026-03-17_v010.css">
+    <script defer src="../scripts/interact_2026-03-17_v010.js"></script>
+  </head>
+  <body data-lang="en" data-page="stations">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="site-shell" data-site-shell>
+      <main id="main-content">
+        <section class="hero">
+          <div class="container hero__grid">
+            <div class="hero__copy fade-in">
+              <span class="eyebrow">Blood Collection Sites</span>
+              <h1 class="hero__title">Good Future has a wide range of blood collection partners across Taiwan</h1>
+              <p class="hero__description">The blood collection sites are operated by institutions and laboratories entrusted by Good Future. You can first select a county or city, then select a region to view the list of corresponding locations and address information.</p>
+            </div>
+            <div class="hero__media fade-in">
+              <figure class="media-frame hero__image">
+                <img src="../assets/hero_service_2026-03-15_v010.png" alt="Good Future Blood drawing base and testing service main vision">
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--muted" id="station-tool">
+          <div class="container" data-station-directory>
+            <div class="section__head fade-in">
+              <span class="eyebrow">Search Tool</span>
+              <h2 class="section__title">Search by city and district</h2>
+              <p class="section__description">If you have not selected a region, you can first select a county or city to view the cooperation bases in that region.</p>
+            </div>
+            <div class="station-tool fade-in">
+              <label class="field">
+                <span class="field__label">Please select a county or city</span>
+                <select class="select" data-station-city></select>
+              </label>
+              <label class="field">
+                <span class="field__label">Please select a region</span>
+                <select class="select" data-station-district></select>
+              </label>
+            </div>
+            <div class="note fade-in">
+              <strong>How to use:</strong>Select a county or city first, then a region; if you still have questions, you can contact Good Future directly for further inquiries.</div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container" data-station-directory>
+            <div class="section__head fade-in">
+              <span class="eyebrow">Search Results</span>
+              <h2 class="section__title">Blood Collection Partner Directory</h2>
+              <p class="section__meta" data-station-count>Currently showing 59 strongholds</p>
+            </div>
+            <div class="station-results" data-station-results></div>
+            <p class="results-empty" data-station-empty hidden>There are currently no locations that meet the criteria. Please adjust the filter conditions or contact Good Future directly.</p>
+          </div>
+        </section>
+
+        <section class="section section--muted">
+          <div class="container">
+            <div class="section__head fade-in">
+              <span class="eyebrow">Additional Notes</span>
+              <h2 class="section__title">Next step after query</h2>
+            </div>
+            <div class="faq-list">
+              <article class="faq fade-in">
+                <button class="faq__button" type="button" aria-expanded="false" aria-controls="faq-station-1">After finding the base, how to arrange the inspection?</button>
+                <div class="faq__panel" id="faq-station-1" hidden>You can write down the base information first, and then confirm the testing requirements and arrangements with Good Future through the contact page.</div>
+              </article>
+              <article class="faq fade-in">
+                <button class="faq__button" type="button" aria-expanded="false" aria-controls="faq-station-2">What if the location is not on the list?</button>
+                <div class="faq__panel" id="faq-station-2" hidden>You can contact Good Future directly and the team will assist in evaluating nearby serviceable locations and subsequent delivery methods.</div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </body>
+</html>
