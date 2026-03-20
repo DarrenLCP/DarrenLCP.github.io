@@ -327,24 +327,23 @@ function buildHeader(currentPage) {
   const nav = copy.navItems
     .map(
       ([key, label]) =>
-        `<li><a class="nav__link" href="${resolveRoute(key)}"${key === currentPage ? ' aria-current="page"' : ""}>${label}</a></li>`
+        `<a href="${resolveRoute(key)}"${key === currentPage ? ' aria-current="page"' : ""}>${label}</a>`
     )
     .join("");
 
   return `
-    <header class="page-header">
-      <div class="container page-header__inner">
+    <header class="site-header" data-site-header>
+      <div class="container site-header__inner">
         <a class="brand" href="${resolveRoute("home")}" aria-label="${copy.brandHomeLabel}">
           <img class="brand__logo" src="${asset("brand_logo_top_2026-03-15_v009.png")}" alt="榮文生醫 Good Future BioMed" />
         </a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-label="${copy.navToggleLabel}">
-          <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="${copy.navToggleLabel}" data-menu-toggle>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </button>
-        <nav class="nav" aria-label="${copy.navAriaLabel}">
-          <ul class="nav__list">
-            ${nav}
-            <li><a class="nav__link nav__link--lang" href="${resolveLanguageSwitchHref()}" aria-label="${copy.languageSwitchAriaLabel}">${copy.languageSwitchLabel}</a></li>
-          </ul>
+        <nav class="site-nav" id="site-nav" aria-label="${copy.navAriaLabel}">
+          ${nav}
+          <a class="lang-link" href="${resolveLanguageSwitchHref()}" aria-label="${copy.languageSwitchAriaLabel}">${copy.languageSwitchLabel}</a>
         </nav>
       </div>
     </header>
@@ -409,12 +408,20 @@ function initChrome() {
   shell.insertAdjacentHTML("afterbegin", buildHeader(page));
   shell.insertAdjacentHTML("beforeend", buildFooter());
 
-  const header = shell.querySelector(".page-header");
-  const toggle = shell.querySelector(".nav-toggle");
+  const header = shell.querySelector(".site-header");
+  const toggle = shell.querySelector("[data-menu-toggle]");
+  const navLinks = [...shell.querySelectorAll(".site-nav a")];
   toggle?.addEventListener("click", () => {
     const expanded = toggle.getAttribute("aria-expanded") === "true";
     toggle.setAttribute("aria-expanded", String(!expanded));
     header?.classList.toggle("is-open", !expanded);
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      toggle?.setAttribute("aria-expanded", "false");
+      header?.classList.remove("is-open");
+    });
   });
 }
 
