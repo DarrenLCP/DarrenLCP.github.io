@@ -1802,10 +1802,10 @@ body[data-page="services"] .faq__panel {
 
   .site-header.is-open .site-nav .lang-link {
     margin-left: 0;
-    justify-content: center;
-    justify-self: end;
-    width: auto;
-    min-width: 3.25rem;
+    justify-content: flex-start;
+    justify-self: stretch;
+    width: 100%;
+    min-width: 0;
   }
 
   .site-header__inner {
