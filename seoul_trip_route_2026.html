@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 首爾暖色互動行程地圖版</title>
+  <style>
+    :root {
+      --bg: #fff8f1;
+      --bg2: #fff1e4;
+      --panel: #fffaf5;
+      --panel-2: #fff3e8;
+      --text: #4a2d1f;
+      --muted: #8a6552;
+      --accent: #d96c3f;
+      --accent-2: #b95a32;
+      --accent-3: #f6b26b;
+      --line: #f0d2bd;
+      --card: rgba(217,108,63,0.05);
+      --shadow: 0 10px 24px rgba(125, 73, 37, 0.08);
+      --ok: #f7e4d1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1220px, calc(100% - 24px)); margin: 24px auto 40px; }
+    .hero, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+    .hero {
+      padding: 24px;
+      background: linear-gradient(135deg, #fff7ef 0%, #ffe8d7 100%);
+    }
+    .hero h1 { margin: 0 0 10px; font-size: clamp(1.7rem, 3.2vw, 2.5rem); }
+    .hero p { margin: 8px 0; color: var(--muted); }
+    .badge-row, .quick-links, .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge, .quick-links a, .chip, .map-link, .route-link, .search-link {
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.93rem;
+      border: 1px solid var(--line);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge, .chip { background: #fff3e8; }
+    .quick-links a { background: #fff; }
+    .grid { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 18px; margin-top: 18px; }
+    .panel { padding: 18px; }
+    .panel h2 { margin: 0 0 12px; font-size: 1.18rem; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    button, select, input {
+      font: inherit;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 10px 12px;
+    }
+    button { cursor: pointer; }
+    button.active { background: #ffe6d4; border-color: var(--accent); color: var(--accent-2); }
+    .day-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .day-card h3 { margin: 0 0 8px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 12px; }
+    .meta span {
+      background: #fff3e8;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.92rem;
+      border: 1px solid var(--line);
+    }
+    .timeline { display: grid; gap: 10px; margin-top: 10px; }
+    .item {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.8);
+    }
+    .time { color: var(--accent-2); font-weight: 700; }
+    .small { font-size: 0.92rem; color: var(--muted); }
+    .mini-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .route-link { background: #ffe0cc; color: #7d3d22; }
+    .map-link { background: #fff3e8; color: #8a4b29; }
+    .search-link { background: #fff9f4; color: #8a4b29; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--accent-2); }
+    .calc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .result {
+      margin-top: 12px; padding: 14px; border-radius: 16px;
+      background: var(--ok); border: 1px solid var(--line);
+    }
+    details {
+      background: #fffdfb; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px;
+    }
+    summary { cursor: pointer; font-weight: 700; }
+    .notice {
+      border-left: 4px solid var(--accent); background: #fff3e8; padding: 12px 14px; border-radius: 12px; margin-top: 12px; color: #7d4b2d;
+    }
+    .footer { margin-top: 18px; color: var(--muted); font-size: 0.92rem; }
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .item { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>2026 首爾暖色互動行程地圖版</h1>
+      <p>這版已升級成「每一段移動」都附帶 Naver Map 路線連結，並保留景點一鍵搜尋與預算、入境、預約、天氣資訊。</p>
+      <p>建議在手機上搭配已安裝的 NAVER Map App 使用；若 App 未安裝，nmap:// 連結可能無法直接開啟。</p>
+      <div class="badge-row">
+        <span class="badge">日期：2026/03/29 - 2026/04/03</span>
+        <span class="badge">色系：暖色調</span>
+        <span class="badge">重點升級：逐段移動路線連結</span>
+        <span class="badge">新檔名：seoul_trip_route_warm_2026.html</span>
+      </div>
+      <div class="quick-links" style="margin-top:14px;">
+        <a href="#itinerary">每日行程</a>
+        <a href="#converter">匯率換算</a>
+        <a href="#budget">預算</a>
+        <a href="#entry">入境</a>
+        <a href="#bookings">預約</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel" id="itinerary">
+        <h2>每日行程與逐段路線</h2>
+        <div class="toolbar" id="dayButtons"></div>
+        <div id="dayContainer"></div>
+      </section>
+
+      <section class="panel" id="converter">
+        <h2>匯率換算器</h2>
+        <p class="small">預設採你提供的估算匯率，可自行修改成刷卡匯率或保守匯率。</p>
+        <div class="calc-grid">
+          <div><label for="rate">1 TWD = 幾 KRW</label><input id="rate" type="number" step="0.01" value="46.9" /></div>
+          <div><label for="mode">換算方向</label><select id="mode"><option value="twd2krw">TWD → KRW</option><option value="krw2twd">KRW → TWD</option></select></div>
+          <div><label for="amount">金額</label><input id="amount" type="number" step="0.01" value="1000" /></div>
+          <div><label for="preset">快速帶入</label><select id="preset"><option value="">請選擇</option><option value="100000">KRW 100,000</option><option value="150000">KRW 150,000</option><option value="200000">KRW 200,000</option><option value="31000">KRW 31,000 (Seoul Sky)</option><option value="62000">KRW 62,000 (Fast Pass)</option><option value="20000">KRW 20,000 (Korea Lab 現場)</option></select></div>
+        </div>
+        <div class="result" id="convertResult"></div>
+        <div class="notice">小提醒：路邊攤、小店補現金、T-money 儲值與臨時計程車需求，仍建議保留至少 KRW 100,000 的備援現金。</div>
+      </section>
+    </div>
+
+    <div class="grid">
+      <section class="panel" id="budget">
+        <h2>預算規劃</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>項目</th><th>估算</th></tr></thead>
+            <tbody>
+              <tr><td>建議最低現金</td><td>KRW 100,000；較保險可抓 KRW 150,000–200,000</td></tr>
+              <tr><td>交通預算</td><td>KRW 35,000–45,000</td></tr>
+              <tr><td>Korea Lab</td><td>預登免費；現場 KRW 20,000</td></tr>
+              <tr><td>Seoul Sky</td><td>一般票 KRW 31,000；Fast Pass KRW 62,000</td></tr>
+              <tr><td>每日吃喝</td><td>KRW 35,000–60,000 / 日；加甜點或夜景咖啡可抓 KRW 60,000–90,000 / 日</td></tr>
+              <tr><td>整趟總預算</td><td>不含住宿/購物，約 KRW 250,000–360,000；約 NT$5,300–7,700</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="calc-grid" style="margin-top:12px;">
+          <div><label><input type="checkbox" id="addKorealab" /> 加入 Korea Lab 現場票 KRW 20,000</label></div>
+          <div><label><input type="checkbox" id="fastPass" /> 升級 Seoul Sky Fast Pass（+ KRW 31,000）</label></div>
+        </div>
+        <div class="result" id="budgetResult"></div>
+      </section>
+
+      <section class="panel" id="entry">
+        <h2>入境與通關</h2>
+        <details open>
+          <summary>簽證 / K-ETA / e-Arrival Card</summary>
+          <p>此版本以台灣護照為前提。若不申請 K-ETA，需在抵韓前 3 天內填 e-Arrival Card；若主動申請 K-ETA，費用為 KRW 10,000，通常 72 小時內審核，且可免填 arrival card。</p>
+        </details>
+        <details>
+          <summary>護照與離線備份</summary>
+          <p>建議護照至少保留 6 個月以上效期，並把住宿地址、回程機票、Korea Lab 預登信、Seoul Sky 訂票截圖存離線。</p>
+        </details>
+        <details>
+          <summary>海關與攜帶品</summary>
+          <p>一般物品 US$800 內；酒 2L 且 US$400 內；香水 60ml；香菸 200 支。超過 US$10,000 等值現金或有價證券需申報。</p>
+        </details>
+      </section>
+    </div>
+
+    <div class="grid">
+      <section class="panel" id="bookings">
+        <h2>預約與待辦</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>項目</th><th>建議動作</th><th>狀態</th></tr></thead>
+            <tbody>
+              <tr><td>Korea Lab 2026</td><td>3/30 18:00 前完成 Pre-Registration；到場走 Pre-registration Desk</td><td><input type="checkbox" /></td></tr>
+              <tr><td>Seoul Sky</td><td>建議預約 4/2 16:40–17:20 入場時段</td><td><input type="checkbox" /></td></tr>
+              <tr><td>Dior Seongsu</td><td>先看 app / 官網時段；若無則打電話確認 walk-in / waitlist</td><td><input type="checkbox" /></td></tr>
+              <tr><td>T-money / NAMANE / WOWPASS</td><td>至少準備一張</td><td><input type="checkbox" /></td></tr>
+              <tr><td>離線備份</td><td>QR code、訂單號、韓文地址與電話都截圖</td><td><input type="checkbox" /></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>天氣與穿搭</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>日期</th><th>天氣</th><th>溫度</th><th>建議</th></tr></thead>
+            <tbody>
+              <tr><td>3/29 Sun</td><td>晴</td><td>15 / 6°C</td><td>薄外套必帶</td></tr>
+              <tr><td>3/30 Mon</td><td>多雲</td><td>18 / 8°C</td><td>長袖＋輕外套</td></tr>
+              <tr><td>3/31 Tue</td><td>早上可能小雨，之後轉晴</td><td>16 / 6°C</td><td>包內放折傘</td></tr>
+              <tr><td>4/1 Wed</td><td>晴到多雲</td><td>16 / 7°C</td><td>洋蔥式穿法</td></tr>
+              <tr><td>4/2 Thu</td><td>早上偶雨，其後多雲</td><td>16 / 6°C</td><td>晚間外套要夠</td></tr>
+              <tr><td>4/3 Fri</td><td>晴</td><td>12 / 5°C</td><td>機場日不要穿太薄</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-top:18px;">
+      <h2>官方連結</h2>
+      <div class="chips">
+        <a class="chip" target="_blank" href="https://k-eta.go.kr/portal/newapply/index.do">K-ETA</a>
+        <a class="chip" target="_blank" href="https://www.e-arrivalcard.go.kr/portal/main/index.do">e-Arrival Card</a>
+        <a class="chip" target="_blank" href="https://m.customs.go.kr/tms/html/mos/psnr/MOS4001004S.do">韓國海關</a>
+        <a class="chip" target="_blank" href="https://korealab.org/eng/lab/korealab_v_info.asp">Korea Lab 2026</a>
+        <a class="chip" target="_blank" href="https://www.dior.com/fashion/stores/en_us/south-korea/seoul/7-yeonmujang-5-gil">Dior Seongsu</a>
+        <a class="chip" target="_blank" href="https://seoulsky.lotteworld.com/museum/main/index.do">Seoul Sky</a>
+      </div>
+      <div class="footer">此檔可離線開啟。若個別路線連結因 NAVER App 辨識或系統限制無法直接啟動，仍可使用同卡片中的景點搜尋按鈕作為備援。</div>
+    </section>
+  </div>
+
+  <script>
+    const appName = 'https://local.seoul.trip';
+    const places = {
+      icnT2: {name: '인천국제공항 제2여객터미널', lat: 37.4687, lng: 126.4335},
+      cleo: {name: '호스텔 클레오 홍대', lat: 37.5562, lng: 126.9229},
+      gentleHongdae: {name: '젠틀몬스터 홍대', lat: 37.5569, lng: 126.9237},
+      kett: {name: '구로디지털단지', lat: 37.4849, lng: 126.9015},
+      hyundaiSeoul: {name: '더현대 서울', lat: 37.5253, lng: 126.9288},
+      yeouinaru: {name: '여의나루역', lat: 37.5271, lng: 126.9327},
+      yeonnam: {name: '연남동', lat: 37.5625, lng: 126.9257},
+      soiYeonnam: {name: '소이연남', lat: 37.5614, lng: 126.9261},
+      cafeLayered: {name: '카페 레이어드 연남', lat: 37.5621, lng: 126.9268},
+      kintex7: {name: '킨텍스 제1전시장 7홀', lat: 37.6688, lng: 126.7453},
+      myeongdongKyoja: {name: '명동교자 본점', lat: 37.5634, lng: 126.9853},
+      diorSeongsu: {name: '디올 성수', lat: 37.5445, lng: 127.0558},
+      amoreSeongsu: {name: '아모레 성수', lat: 37.5440, lng: 127.0551},
+      onionSeongsu: {name: '카페 어니언 성수', lat: 37.5447, lng: 127.0577},
+      seoulSky: {name: '서울스카이', lat: 37.5131, lng: 127.1025},
+      seokchonLake: {name: '석촌호수', lat: 37.5089, lng: 127.1008},
+      lotteMall: {name: '롯데월드몰', lat: 37.5125, lng: 127.1029},
+      hongikStation: {name: '홍대입구역', lat: 37.5572, lng: 126.9245},
+      oliveHongdae: {name: '올리브영 홍대타운', lat: 37.5566, lng: 126.9236},
+      kakaoHongdae: {name: '카카오프렌즈 홍대 플래그십', lat: 37.5552, lng: 126.9233},
+      blueBottleYeouido: {name: '블루보틀 여의도', lat: 37.5258, lng: 126.9287},
+      oliveMyeongdong: {name: '올리브영 명동타운', lat: 37.5630, lng: 126.9858}
+    };
+
+    function routeUrl(fromKey, toKey, mode='public') {
+      const s = places[fromKey], d = places[toKey];
+      if (!s || !d) return '#';
+      return `nmap://route/${mode}?slat=${s.lat}&slng=${s.lng}&sname=${encodeURIComponent(s.name)}&dlat=${d.lat}&dlng=${d.lng}&dname=${encodeURIComponent(d.name)}&appname=${encodeURIComponent(appName)}`;
+    }
+    function searchUrl(key) {
+      const p = places[key];
+      return p ? `nmap://search?query=${encodeURIComponent(p.name)}&appname=${encodeURIComponent(appName)}` : '#';
+    }
+
+    const days = [
+      {
+        key: '0329', label: '3/29 週日', title: '抵達首爾、弘大入住、Gentle Monster', weather: '晴 15 / 6°C', area: '仁川 T2 → 弘大',
+        tips: ['第一天不要排太滿', '體力不足時，Gentle Monster 與晚餐二選一'],
+        nearby: [['oliveHongdae', 'Olive Young Hongdae Town'], ['kakaoHongdae', 'Kakao Friends Hongdae Flagship']],
+        items: [
+          {time:'16:50–18:10', title:'抵達仁川 T2、入境、領行李', note:'預留通關與行李時間'},
+          {time:'18:10–19:31', title:'仁川 T2 → Hostel CLEO', note:'步行 344m / 6 分、AREX 約 60 分、再步行 563m / 8 分', route:{from:'icnT2', to:'cleo', mode:'public'}},
+          {time:'19:31–19:45', title:'入住、放行李', note:'先完成 check-in', spot:'cleo'},
+          {time:'19:45–20:11', title:'Hostel CLEO → Gentle Monster 弘大', note:'步行約 26 分', route:{from:'cleo', to:'gentleHongdae', mode:'walk'}},
+          {time:'20:15–21:30', title:'弘大晚餐', note:'視體力彈性調整', spot:'gentleHongdae'}
+        ]
+      },
+      {
+        key: '0330', label: '3/30 週一', title: 'KETT、The Hyundai Seoul、漢江', weather: '多雲 18 / 8°C', area: '弘大 → 九老 → 汝矣島',
+        tips: ['工作與交通密度高', '不建議再外插 63 大樓或 IFC'],
+        nearby: [['blueBottleYeouido', 'Blue Bottle Yeouido']],
+        items: [
+          {time:'07:20–08:00', title:'Hostel CLEO → KETT', note:'步行 630m、2 號線 16 分、再步行 797m', route:{from:'cleo', to:'kett', mode:'public'}},
+          {time:'08:00–17:00', title:'KETT 辦公', note:'商務主行程', spot:'kett'},
+          {time:'17:10–17:55', title:'KETT → The Hyundai Seoul', note:'Naver 建議 5618 公車 + 步行', route:{from:'kett', to:'hyundaiSeoul', mode:'public'}},
+          {time:'17:55–19:15', title:'The Hyundai Seoul', note:'逛街與甜點可一併安排', spot:'hyundaiSeoul'},
+          {time:'19:15–20:10', title:'百貨內晚餐', note:'節省轉場時間', spot:'hyundaiSeoul'},
+          {time:'20:10–20:16', title:'The Hyundai → 여의나루', note:'步行約 6 分', route:{from:'hyundaiSeoul', to:'yeouinaru', mode:'walk'}},
+          {time:'20:16–21:10', title:'漢江散步', note:'拍夜景即可，不必走太遠', spot:'yeouinaru'},
+          {time:'21:10–21:36', title:'여의나루 → Hostel CLEO', note:'753 公車 + 短步行', route:{from:'yeouinaru', to:'cleo', mode:'public'}}
+        ]
+      },
+      {
+        key: '0331', label: '3/31 週二', title: 'KETT、延南洞', weather: '可能小雨後轉晴 16 / 6°C', area: '九老 → 弘大 / 延南',
+        tips: ['很適合把吃飯與咖啡都留在延南', '不要再跨區'],
+        nearby: [['soiYeonnam', 'Soi Yeonnam'], ['cafeLayered', 'Cafe Layered Yeonnam']],
+        items: [
+          {time:'07:20–08:00', title:'Hostel CLEO → KETT', note:'與前一天相同', route:{from:'cleo', to:'kett', mode:'public'}},
+          {time:'08:00–17:00', title:'KETT 辦公', note:'商務主行程', spot:'kett'},
+          {time:'17:10–17:53', title:'KETT → Hostel CLEO', note:'步行、2 號線、再步行', route:{from:'kett', to:'cleo', mode:'public'}},
+          {time:'18:00–19:00', title:'延南洞 / 京義線林蔭道散步', note:'下班後放鬆', route:{from:'cleo', to:'yeonnam', mode:'walk'}},
+          {time:'19:00–20:15', title:'延南洞晚餐', note:'Soi Yeonnam 可保留', route:{from:'yeonnam', to:'soiYeonnam', mode:'walk'}},
+          {time:'20:15–21:00', title:'咖啡或回住宿', note:'可留在延南或直接回程', route:{from:'soiYeonnam', to:'cleo', mode:'walk'}}
+        ]
+      },
+      {
+        key: '0401', label: '4/1 週三', title: 'Korea Lab 2026、明洞', weather: '晴到多雲 16 / 7°C', area: '弘大 → KINTEX → 明洞',
+        tips: ['太累就保留晚餐與採買', 'KINTEX 回明洞可重點看 GTX-A'],
+        nearby: [['oliveMyeongdong', 'Olive Young Myeongdong Town'], ['myeongdongKyoja', 'Myeongdong Kyoja']],
+        items: [
+          {time:'08:20–09:05', title:'Hostel CLEO → KINTEX Hall 7', note:'步行 9 分、M7731 約 28 分、步行 5 分', route:{from:'cleo', to:'kintex7', mode:'public'}},
+          {time:'09:05–09:50', title:'進館、badge、洗手間、咖啡', note:'展前緩衝時間', spot:'kintex7'},
+          {time:'10:00–17:00', title:'Korea Lab 2026', note:'主展會行程', spot:'kintex7'},
+          {time:'17:10–17:55', title:'KINTEX Hall 7 → 明洞餃子本店', note:'GTX-A + 4 號線', route:{from:'kintex7', to:'myeongdongKyoja', mode:'public'}},
+          {time:'18:00–19:00', title:'明洞晚餐', note:'明洞餃子', spot:'myeongdongKyoja'},
+          {time:'19:00–21:00', title:'明洞採買', note:'K-beauty / 藥妝 / 伴手禮', route:{from:'myeongdongKyoja', to:'oliveMyeongdong', mode:'walk'}},
+          {time:'21:00–21:34', title:'明洞 → Hostel CLEO', note:'步行至 을지로입구역搭 2 號線', route:{from:'myeongdongKyoja', to:'cleo', mode:'public'}}
+        ]
+      },
+      {
+        key: '0402', label: '4/2 週四', title: '聖水、Dior、Seoul Sky、石村湖', weather: '早上偶雨，其後多雲 16 / 6°C', area: '弘大 → 聖水 → 蠶室',
+        tips: ['Dior 若排隊太長可改 AMORE Seongsu', '夜櫻體感較冷，外套要夠'],
+        nearby: [['amoreSeongsu', 'AMORE Seongsu'], ['onionSeongsu', 'Cafe Onion Seongsu'], ['lotteMall', 'Lotte World Mall']],
+        items: [
+          {time:'10:20–11:06', title:'Hostel CLEO → Dior Seongsu', note:'步行 9 分到弘大、2 號線 27 分到聖水、步行 6 分', route:{from:'cleo', to:'diorSeongsu', mode:'public'}},
+          {time:'11:10–12:15', title:'Dior Seongsu', note:'週四前往，非週一公休日', spot:'diorSeongsu'},
+          {time:'12:20–15:30', title:'聖水午餐、咖啡、慢逛', note:'可依排隊情況改去 AMORE Seongsu 或 Cafe Onion', route:{from:'diorSeongsu', to:'amoreSeongsu', mode:'walk'}},
+          {time:'16:00–16:24', title:'Dior Seongsu → Seoul Sky', note:'2 號線約 10 分到蠶室', route:{from:'diorSeongsu', to:'seoulSky', mode:'public'}},
+          {time:'17:00–18:40', title:'Seoul Sky', note:'夕陽轉夜景最佳時段', spot:'seoulSky'},
+          {time:'18:40–18:45', title:'Seoul Sky → 石村湖', note:'步行 5 分', route:{from:'seoulSky', to:'seokchonLake', mode:'walk'}},
+          {time:'18:45–20:00', title:'石村湖夜櫻散步', note:'拍照與繞湖', spot:'seokchonLake'},
+          {time:'20:00–21:00', title:'石村湖 → Lotte World Mall 晚餐或補貨', note:'室內收尾', route:{from:'seokchonLake', to:'lotteMall', mode:'walk'}},
+          {time:'21:10–22:03', title:'Jamsil → Hostel CLEO', note:'2 號線 38 分 + 步行', route:{from:'lotteMall', to:'cleo', mode:'public'}}
+        ]
+      },
+      {
+        key: '0403', label: '4/3 週五', title: '弘大早午餐、返台', weather: '晴 12 / 5°C', area: '弘大 → 仁川 T2',
+        tips: ['退稅單多就提早離開住宿', '機場日不要穿太薄'],
+        nearby: [['hongikStation', '홍대입구역']],
+        items: [
+          {time:'08:30–10:30', title:'早午餐、整理行李', note:'最後補給', spot:'cleo'},
+          {time:'10:30–11:00', title:'退房', note:'確認護照與退稅單', spot:'cleo'},
+          {time:'12:45–14:05', title:'Hostel CLEO → 仁川 T2', note:'步行 8 分到弘大站、AREX 約 58 分、再步行 6 分', route:{from:'cleo', to:'icnT2', mode:'public'}},
+          {time:'14:05–16:20', title:'報到、托運、退稅、登機', note:'預留緩衝', spot:'icnT2'}
+        ]
+      }
+    ];
+
+    const dayButtons = document.getElementById('dayButtons');
+    const dayContainer = document.getElementById('dayContainer');
+
+    function actionHtml(item) {
+      const actions = [];
+      if (item.route) {
+        const fromP = places[item.route.from], toP = places[item.route.to];
+        actions.push(`<a class="route-link" href="${routeUrl(item.route.from, item.route.to, item.route.mode)}">🧭 路線：${fromP.name} → ${toP.name}</a>`);
+        actions.push(`<a class="search-link" href="${searchUrl(item.route.from)}">起點搜尋</a>`);
+        actions.push(`<a class="search-link" href="${searchUrl(item.route.to)}">終點搜尋</a>`);
+      } else if (item.spot) {
+        actions.push(`<a class="map-link" href="${searchUrl(item.spot)}">📍 在 Naver Map 開啟</a>`);
+      }
+      return actions.length ? `<div class="mini-actions">${actions.join('')}</div>` : '';
+    }
+
+    function renderDay(dayKey) {
+      const day = days.find(d => d.key === dayKey) || days[0];
+      document.querySelectorAll('.toolbar button').forEach(btn => btn.classList.toggle('active', btn.dataset.key === day.key));
+      const itemsHtml = day.items.map(item => `
+        <div class="item">
+          <div class="time">${item.time}</div>
+          <div>
+            <div>${item.title}</div>
+            <div class="small">${item.note}</div>
+            ${actionHtml(item)}
+          </div>
+        </div>
+      `).join('');
+      const tipsHtml = day.tips.map(t => `<span class="chip">${t}</span>`).join('');
+      const nearbyHtml = day.nearby.length ? day.nearby.map(([key, label]) => `<a class="chip" href="${searchUrl(key)}">${label}</a>`).join('') : '<span class="small">此日無額外周邊推薦。</span>';
+      dayContainer.innerHTML = `
+        <article class="day-card">
+          <h3>${day.label}｜${day.title}</h3>
+          <div class="meta"><span>區域：${day.area}</span><span>天氣：${day.weather}</span></div>
+          <div class="timeline">${itemsHtml}</div>
+          <h4 style="margin:14px 0 8px;">提醒</h4>
+          <div class="chips">${tipsHtml}</div>
+          <h4 style="margin:14px 0 8px;">周邊點位搜尋</h4>
+          <div class="chips">${nearbyHtml}</div>
+        </article>
+      `;
+    }
+
+    days.forEach((d, idx) => {
+      const btn = document.createElement('button');
+      btn.textContent = d.label;
+      btn.dataset.key = d.key;
+      if (idx === 0) btn.classList.add('active');
+      btn.addEventListener('click', () => renderDay(d.key));
+      dayButtons.appendChild(btn);
+    });
+    renderDay(days[0].key);
+
+    const rateEl = document.getElementById('rate');
+    const modeEl = document.getElementById('mode');
+    const amountEl = document.getElementById('amount');
+    const presetEl = document.getElementById('preset');
+    const convertResult = document.getElementById('convertResult');
+    const budgetResult = document.getElementById('budgetResult');
+    const addKorealab = document.getElementById('addKorealab');
+    const fastPass = document.getElementById('fastPass');
+
+    function fmt(n, d=0) {
+      return new Intl.NumberFormat('zh-Hant-TW', {maximumFractionDigits:d, minimumFractionDigits:d}).format(n);
+    }
+    function calcConvert() {
+      const rate = Number(rateEl.value) || 0;
+      const amount = Number(amountEl.value) || 0;
+      const mode = modeEl.value;
+      if (!rate || rate <= 0) {
+        convertResult.innerHTML = '請輸入大於 0 的匯率。';
+        return;
+      }
+      if (mode === 'twd2krw') {
+        const krw = amount * rate;
+        convertResult.innerHTML = `<strong>${fmt(amount,2)} TWD</strong> ≈ <strong>${fmt(krw,0)} KRW</strong><br><span class="small">以 1 TWD = ${fmt(rate,2)} KRW 計算</span>`;
+      } else {
+        const twd = amount / rate;
+        convertResult.innerHTML = `<strong>${fmt(amount,0)} KRW</strong> ≈ <strong>${fmt(twd,2)} TWD</strong><br><span class="small">以 1 TWD = ${fmt(rate,2)} KRW 計算</span>`;
+      }
+      refreshBudget();
+    }
+    function refreshBudget() {
+      const rate = Number(rateEl.value) || 46.9;
+      let low = 250000, high = 360000, notes = [];
+      if (addKorealab.checked) { low += 20000; high += 20000; notes.push('已加入 Korea Lab 現場票'); }
+      if (fastPass.checked) { low += 31000; high += 31000; notes.push('已加入 Seoul Sky Fast Pass 升級差額'); }
+      budgetResult.innerHTML = `<div><strong>估算總額：</strong> KRW ${fmt(low,0)} – ${fmt(high,0)}</div><div><strong>折合台幣：</strong> NT$ ${fmt(low/rate,0)} – ${fmt(high/rate,0)}</div><div class="small">${notes.length ? notes.join('；') : '目前為原始版本預算，未加額外選項。'}</div>`;
+    }
+    presetEl.addEventListener('change', () => {
+      if (!presetEl.value) return;
+      amountEl.value = presetEl.value;
+      modeEl.value = 'krw2twd';
+      calcConvert();
+    });
+    [rateEl, modeEl, amountEl].forEach(el => el.addEventListener('input', calcConvert));
+    addKorealab.addEventListener('change', refreshBudget);
+    fastPass.addEventListener('change', refreshBudget);
+    calcConvert();
+    refreshBudget();
+  </script>
+</body>
+</html>
