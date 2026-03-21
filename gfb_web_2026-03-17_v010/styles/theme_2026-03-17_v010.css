@@ -1768,6 +1768,7 @@ body[data-page="services"] .faq__panel {
     display: inline-flex;
     width: 2.65rem;
     height: 2.65rem;
+    margin-left: auto;
   }
 
   .site-header.is-open .site-nav {
