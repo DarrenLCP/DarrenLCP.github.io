@@ -1919,6 +1919,23 @@ body[data-page="services"] .faq__panel {
     justify-self: stretch;
   }
 
+  body[data-lang="en"][data-page="home"] #home-hero .eyebrow {
+    max-width: 30rem;
+    font-size: 0.78rem;
+    line-height: 1.56;
+    letter-spacing: 0.03em;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__title-main,
+  body[data-lang="en"][data-page="home"] #home-hero .hero__title-subline {
+    white-space: normal;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__description,
+  body[data-lang="en"][data-page="home"] #home-hero .hero__support {
+    max-width: none;
+  }
+
   body[data-page="home"] #home-hero .hero-chip {
     display: none;
   }
@@ -2061,6 +2078,38 @@ body[data-page="services"] .faq__panel {
   body[data-page="home"] #home-hero .hero__title {
     font-size: clamp(1.78rem, 5.9vw, 2.22rem);
     line-height: 1.03;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .eyebrow {
+    font-size: 0.72rem;
+    line-height: 1.58;
+    overflow-wrap: anywhere;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__title {
+    font-size: clamp(1.56rem, 6.1vw, 1.98rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__title-main {
+    max-width: 10ch;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__title-subline {
+    max-width: 15ch;
+    font-size: 0.74em;
+    line-height: 1.16;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__description {
+    font-size: 1rem;
+    line-height: 1.56;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__support {
+    font-size: 0.93rem;
+    line-height: 1.74;
   }
 
   body[data-page="home"] #home-hero .hero__title-subline {
