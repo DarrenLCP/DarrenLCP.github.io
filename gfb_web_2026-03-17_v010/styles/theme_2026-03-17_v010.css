@@ -2083,23 +2083,28 @@ body[data-page="services"] .faq__panel {
   body[data-lang="en"][data-page="home"] #home-hero .eyebrow {
     font-size: 0.72rem;
     line-height: 1.58;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+    word-break: normal;
+    text-wrap: balance;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__title {
     font-size: clamp(1.56rem, 6.1vw, 1.98rem);
     line-height: 1.08;
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__title-main {
-    max-width: 10ch;
+    max-width: none;
+    text-wrap: balance;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__title-subline {
-    max-width: 15ch;
+    max-width: none;
     font-size: 0.74em;
     line-height: 1.16;
+    text-wrap: balance;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__description {
