@@ -596,6 +596,10 @@ body[data-page="home"] #home-hero .eyebrow {
   letter-spacing: 0.04em;
 }
 
+body[data-lang="en"][data-page="home"] #home-hero .hero__eyebrow-line + .hero__eyebrow-line::before {
+  content: " | ";
+}
+
 body[data-page="home"] #home-hero .hero__description {
   max-width: 35rem;
   font-size: clamp(1.08rem, 0.98rem + 0.42vw, 1.28rem);
@@ -2085,26 +2089,38 @@ body[data-page="services"] .faq__panel {
     line-height: 1.58;
     overflow-wrap: normal;
     word-break: normal;
-    text-wrap: balance;
+    text-wrap: pretty;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__eyebrow-line {
+    display: block;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__eyebrow-line + .hero__eyebrow-line::before {
+    content: none;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__title {
     font-size: clamp(1.56rem, 6.1vw, 1.98rem);
     line-height: 1.08;
     letter-spacing: -0.02em;
-    text-wrap: balance;
+    text-wrap: pretty;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__title-main {
     max-width: none;
-    text-wrap: balance;
+    text-wrap: pretty;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__title-subline {
     max-width: none;
-    font-size: 0.74em;
+    font-size: 0.72em;
     line-height: 1.16;
-    text-wrap: balance;
+    text-wrap: pretty;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__title-subline-keep {
+    white-space: nowrap;
   }
 
   body[data-lang="en"][data-page="home"] #home-hero .hero__description {
