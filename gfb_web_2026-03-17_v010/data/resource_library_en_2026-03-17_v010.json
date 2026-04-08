@@ -1,6 +1,28 @@
 {
   "news": [
     {
+      "id": "news-70",
+      "type": "news",
+      "nb": "70",
+      "title": "Good Future and Chung Shan Medical University Hospital publish breast cancer CTC study in MDPI Diseases",
+      "publishedAt": "2026-04-08",
+      "summary": "A newly published MDPI paper showed that CSV+ CTCs measured on Good Future's automated negative selection platform may support metastatic-risk stratification and recurrence monitoring in breast cancer.",
+      "coverImage": "assets/paper_mdpi_diseases14040130_thumb_2026-04-08_v002.png",
+      "body": [
+        "Good Future and Chung Shan Medical University Hospital have published a breast-cancer circulating tumor cell study in MDPI Diseases.",
+        "The study used the Chiline CATCH automated negative selection platform and EpCAM plus CSV as the main identification markers.",
+        "The paper reported that CSV+ CTC counts, rather than EpCAM+ counts, were associated with higher metastatic risk.",
+        "CSV+ CTC counts also outperformed conventional serum tumor markers and were associated with worse progression-free survival at higher levels.",
+        "These findings highlight the value of an automated negative selection platform in preserving clinically meaningful CTC phenotypes."
+      ],
+      "gallery": [],
+      "status": "active",
+      "topic": "Research",
+      "badge": "News",
+      "href": "pages/resource-news-nb70_2026-04-08_v001.html",
+      "hrefEn": "pages/resource-news-nb70_en_2026-04-08_v001.html"
+    },
+    {
       "id": "news-69",
       "type": "news",
       "nb": "69",
@@ -1256,6 +1278,26 @@
     }
   ],
   "share": [
+    {
+      "id": "share-mdpi-platform-performance",
+      "type": "share",
+      "title": "Breast cancer CTC paper summary: what the automated negative selection platform revealed",
+      "publishedAt": "2026-04-08",
+      "summary": "See why CSV+ CTCs stood out in this study and what the results suggest for metastatic-risk stratification and recurrence monitoring.",
+      "coverImage": "assets/paper_mdpi_diseases14040130_thumb_2026-04-08_v002.png",
+      "status": "active",
+      "body": [
+        "This paper focused on CSV+ circulating tumor cells in breast cancer and used Good Future’s automated negative selection platform to enrich and evaluate them.",
+        "The study found that CSV+ CTCs, rather than EpCAM+ CTCs, were associated with higher metastatic risk.",
+        "More than 4.5 CSV+ CTCs per 2 mL of blood showed strong specificity for identifying higher-risk patients.",
+        "CSV+ CTCs also outperformed CA 15-3, CA 125, and CEA, and the combined use improved risk stratification further.",
+        "The paper reinforces the value of negative selection in preserving clinically meaningful CTC phenotypes."
+      ],
+      "gallery": [],
+      "badge": "Insight",
+      "href": "pages/resource-share-mdpi-platform-performance_2026-04-08_v001.html",
+      "hrefEn": "pages/resource-share-mdpi-platform-performance_en_2026-04-08_v001.html"
+    },
     {
       "id": "share-ctc-trend",
       "type": "share",

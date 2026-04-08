@@ -1,6 +1,28 @@
 {
   "news": [
     {
+      "id": "news-70",
+      "type": "news",
+      "nb": "70",
+      "title": "榮文生醫與中山附醫共同發表乳癌 CTC 研究，登上 MDPI Diseases",
+      "publishedAt": "2026-04-08",
+      "summary": "榮文生醫與中山醫學大學附設醫院合作研究正式發表於 MDPI《Diseases》，論文顯示以自動化負向篩選平台量測 CSV+ CTC，可作為乳癌轉移風險分層與復發監測的重要參考。",
+      "coverImage": "assets/paper_mdpi_diseases14040130_thumb_2026-04-08_v002.png",
+      "body": [
+        "榮文生醫近期與中山醫學大學附設醫院合作完成的乳癌循環腫瘤細胞（CTC）研究，已正式刊登於 MDPI《Diseases》。",
+        "研究使用榮文生醫的 Chiline CATCH® 自動化負向篩選平台，並以 EpCAM 與 CSV（cell-surface vimentin）作為辨識標記，評估其在轉移風險分層與病程追蹤上的價值。",
+        "研究結果顯示，CSV+ CTC 數量在高轉移風險乳癌患者中明顯上升，且表現優於傳統血清腫瘤標記如 CA 15-3、CA 125 與 CEA。",
+        "當 CSV+ CTC 達每 2 mL 血液 5 個以上時，也與較差的無疾病惡化存活期顯著相關。",
+        "這項成果凸顯自動化負向篩選平台在保留更多具臨床意義 CTC 型態上的價值，也顯示 CSV+ CTC 在乳癌轉移風險評估與復發監測上具有發展成生物標記的潛力。"
+      ],
+      "gallery": [],
+      "status": "active",
+      "topic": "研究成果",
+      "badge": "最新消息",
+      "href": "pages/resource-news-nb70_2026-04-08_v001.html",
+      "hrefEn": "pages/resource-news-nb70_en_2026-04-08_v001.html"
+    },
+    {
       "id": "news-69",
       "type": "news",
       "nb": "69",
@@ -1256,6 +1278,26 @@
     }
   ],
   "share": [
+    {
+      "id": "share-mdpi-platform-performance",
+      "type": "share",
+      "title": "乳癌 CTC 研究摘要：自動化負向篩選平台看見了什麼",
+      "publishedAt": "2026-04-08",
+      "summary": "從 CSV+ CTC、風險分層到無疾病惡化存活期，整理這篇最新論文最值得關注的技術與臨床訊息。",
+      "coverImage": "assets/paper_mdpi_diseases14040130_thumb_2026-04-08_v002.png",
+      "status": "active",
+      "body": [
+        "這篇最新論文聚焦乳癌中的 CSV+ 循環腫瘤細胞，並以榮文生醫的自動化負向篩選平台完成富集與判讀。",
+        "研究顯示，真正與高轉移風險相關的是 CSV+ CTC，而不是 EpCAM+ CTC。",
+        "若 CSV+ CTC 超過每 2 mL 血液 4.5 個，對辨識高轉移風險患者具有不錯的特異度。",
+        "CSV+ CTC 在高轉移風險辨識上的表現優於 CA 15-3、CA 125 與 CEA；若與這些血清標記合併使用，整體風險分層能力還可再提升。",
+        "這再次說明負向篩選平台在保留更多具臨床意義 CTC 型態上的價值。"
+      ],
+      "gallery": [],
+      "badge": "技術焦點",
+      "href": "pages/resource-share-mdpi-platform-performance_2026-04-08_v001.html",
+      "hrefEn": "pages/resource-share-mdpi-platform-performance_en_2026-04-08_v001.html"
+    },
     {
       "id": "share-ctc-trend",
       "type": "share",

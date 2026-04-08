@@ -315,10 +315,12 @@ function resolveLanguageSwitchHref() {
   if (!currentFile) return resolveRoute("home", lang === "en" ? "zh" : "en");
 
   if (lang === "en") {
-    return currentFile.replace(`_en_${versionTag}.html`, `_${versionTag}.html`);
+    const pairedZhFile = currentFile.replace(/_en_(\d{4}-\d{2}-\d{2}_v\d{3}\.html)$/, "_$1");
+    return pairedZhFile !== currentFile ? pairedZhFile : currentFile.replace(`_en_${versionTag}.html`, `_${versionTag}.html`);
   }
 
-  return currentFile.replace(`_${versionTag}.html`, `_en_${versionTag}.html`);
+  const pairedEnFile = currentFile.replace(/_(\d{4}-\d{2}-\d{2}_v\d{3}\.html)$/, "_en_$1");
+  return pairedEnFile !== currentFile ? pairedEnFile : currentFile.replace(`_${versionTag}.html`, `_en_${versionTag}.html`);
 }
 
 function buildHeader(currentPage) {
