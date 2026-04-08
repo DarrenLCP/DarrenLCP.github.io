@@ -1949,6 +1949,10 @@ body[data-page="services"] .faq__panel {
     grid-template-columns: 1fr;
   }
 
+  body[data-lang="en"][data-page="home"] #home-hero .hero__grid {
+    grid-template-columns: 1fr;
+  }
+
   body[data-page="home"] #home-hero .hero__title {
     font-size: clamp(1.85rem, 4.6vw, 2.5rem);
   }
@@ -1957,7 +1961,17 @@ body[data-page="services"] .faq__panel {
     padding-right: 0;
   }
 
+  body[data-lang="en"][data-page="home"] #home-hero .hero__copy {
+    min-width: 0;
+    max-width: none;
+  }
+
   body[data-page="home"] #home-hero .hero__media {
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  body[data-lang="en"][data-page="home"] #home-hero .hero__media {
     max-width: none;
     justify-self: stretch;
   }
