@@ -2283,6 +2283,11 @@ body[data-lang="en"][data-page="resources"] .resource-page-head__title {
   max-width: 52rem;
 }
 
+.resource-page-head--article .article-copy-wrap,
+.resource-page-head--article .resource-page-head__copy {
+  max-width: none;
+}
+
 .article-media-section,
 .article-body-section,
 .related-resources-section {
@@ -2348,6 +2353,12 @@ body[data-lang="en"][data-page="resources"] .resource-page-head__title {
   color: var(--ink);
   font-size: 1rem;
   line-height: 1.9;
+}
+
+.article-figure-caption {
+  color: var(--ink-soft) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.7 !important;
 }
 
 [data-load-more-item][hidden] {
