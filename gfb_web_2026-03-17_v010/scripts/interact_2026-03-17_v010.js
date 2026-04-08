@@ -64,6 +64,16 @@ const siteCopy = {
       directions: "地圖導航",
       cityPlaceholder: "請選擇縣市",
       districtPlaceholder: "請選擇區域",
+      radiusPlaceholder: "不限距離",
+      radiusLabel: (value) => `${value} 公里內`,
+      nearestButton: "查詢離我最近的據點",
+      locating: "正在取得你的位置，請稍候。",
+      locationReady: "已取得你的位置，結果已依距離排序。",
+      locationReadyWithRadius: (value) => `已取得你的位置，目前顯示 ${value} 公里內的據點。`,
+      locationUnsupported: "目前瀏覽器不支援定位功能，請改用縣市與區域查詢。",
+      locationDenied: "你尚未授權定位，請允許位置存取後再試一次。",
+      locationUnavailable: "暫時無法取得位置資訊，請稍後再試。",
+      distanceLabel: (value) => `距離你約 ${value} 公里`,
       count: (value) => `目前顯示 ${value} 筆據點`
     },
     contact: {
@@ -128,6 +138,16 @@ const siteCopy = {
       directions: "Directions",
       cityPlaceholder: "Select a city",
       districtPlaceholder: "Select a district",
+      radiusPlaceholder: "Any distance",
+      radiusLabel: (value) => `Within ${value} km`,
+      nearestButton: "Find the nearest site",
+      locating: "Locating you. Please wait.",
+      locationReady: "Your location has been detected. Results are now sorted by distance.",
+      locationReadyWithRadius: (value) => `Your location has been detected. Showing sites within ${value} km.`,
+      locationUnsupported: "Geolocation is not supported in this browser. Please use the city and district filters instead.",
+      locationDenied: "Location access was denied. Please allow it and try again.",
+      locationUnavailable: "Your location could not be determined right now. Please try again later.",
+      distanceLabel: (value) => `About ${value} km away`,
       count: (value) => `Showing ${value} sites`
     },
     contact: {
@@ -273,6 +293,72 @@ const stationData = [
   { city: "基隆市", district: "中正區", name: "晉安診所", address: "基隆市中正區義一路39號1樓" },
   { city: "基隆市", district: "中正區", name: "中台X光醫事檢驗所", address: "基隆市中正區義一路50號" }
 ];
+
+const stationCoordinates = {
+  "台北市信義區永吉路329號": { lat: 25.045667, lng: 121.575742 },
+  "台北市內湖區內湖路二段363號": { lat: 25.083768, lng: 121.592298 },
+  "台北市內湖區內湖路二段39號": { lat: 25.078963, lng: 121.579888 },
+  "台北市大安區忠孝東路四段216巷32弄15號": { lat: 25.040024, lng: 121.552131 },
+  "台北市大安區復興南路二段151巷33號": { lat: 25.028459, lng: 121.54491 },
+  "台北市萬華區萬大路217號": { lat: 25.026834, lng: 121.500602 },
+  "台北市士林區中山北路七段17號": { lat: 25.119121, lng: 121.53049 },
+  "台北市士林區承德路四段222號": { lat: 25.088456, lng: 121.521499 },
+  "台北市松山區敦化北路153-2號2樓": { lat: 25.054211, lng: 121.549539 },
+  "台北市中正區汀州路二段38號B1": { lat: 25.02537, lng: 121.517494 },
+  "新北市板橋區館前西路6號7樓之1": { lat: 25.007125, lng: 121.459123 },
+  "新北市三重區光復路二段80號10樓": { lat: 25.056961, lng: 121.471945 },
+  "新北市新莊區復興路一段111號": { lat: 25.043111, lng: 121.449311 },
+  "新北市蘆洲區長榮路75號": { lat: 25.083603, lng: 121.462062 },
+  "新北市土城區青雲路258號": { lat: 24.979727, lng: 121.458962 },
+  "新北市五股區成泰路二段162號": { lat: 25.084146, lng: 121.438416 },
+  "桃園市中壢區裕民街26號5樓": { lat: 24.957721, lng: 121.224934 },
+  "桃園市桃園區介壽路286號6樓": { lat: 24.98191, lng: 121.307331 },
+  "桃園市桃園區萬壽路三段178號": { lat: 24.990446, lng: 121.317102 },
+  "桃園市蘆竹區南順七街39號1樓": { lat: 25.039597, lng: 121.290981 },
+  "桃園市龜山區公園路32號5樓": { lat: 25.054865, lng: 121.36689 },
+  "桃園市平鎮區中豐路南勢二段102號": { lat: 24.916787, lng: 121.210644 },
+  "新竹市東區自由路95巷18弄26號": { lat: 24.813498, lng: 120.979098 },
+  "新竹市北區光華東一街12號2樓": { lat: 24.816993, lng: 120.976198 },
+  "苗栗縣苗栗市中正路236號": { lat: 24.564482, lng: 120.823921 },
+  "苗栗縣苗栗市中正路29號": { lat: 24.569223, lng: 120.824623 },
+  "台中市東區十甲路346號": { lat: 24.144288, lng: 120.706407 },
+  "台中市東區台中路131號3樓": { lat: 24.132569, lng: 120.684041 },
+  "台中市北屯區東山路一段308號": { lat: 24.176084, lng: 120.724812 },
+  "台中市大里區德芳路二段133號": { lat: 24.103485, lng: 120.677416 },
+  "台中市西屯區漢口路二段10號": { lat: 24.163115, lng: 120.657786 },
+  "台中市后里區甲后路一段255號": { lat: 24.309036, lng: 120.726955 },
+  "台中市豐原區中正路701號": { lat: 24.249116, lng: 120.701513 },
+  "台中市清水區中山路243-2號": { lat: 24.26891, lng: 120.575172 },
+  "彰化縣彰化市崙平南路532號": { lat: 24.065128, lng: 120.528915 },
+  "南投縣南投市彰南路二段27號": { lat: 23.836203, lng: 120.704783 },
+  "雲林縣虎尾鎮福民路75號": { lat: 23.710095, lng: 120.435915 },
+  "雲林縣四湖鄉中正路376號": { lat: 23.635864, lng: 120.225217 },
+  "高雄市三民區民族一路80號17樓": { lat: 22.643121, lng: 120.314658 },
+  "高雄市三民區正忠路18號": { lat: 22.641315, lng: 120.330396 },
+  "高雄市鼓山區裕誠路1188號": { lat: 22.666011, lng: 120.297278 },
+  "高雄市前金區七賢二路330號": { lat: 22.631628, lng: 120.290593 },
+  "高雄市左營區文慈路150號": { lat: 22.681855, lng: 120.318086 },
+  "高雄市新興區民族二路80號": { lat: 22.633155, lng: 120.313784 },
+  "高雄市橋頭區成功南路79號": { lat: 22.753955, lng: 120.311864 },
+  "屏東縣屏東市濟南街8-8號": { lat: 22.676988, lng: 120.491125 },
+  "宜蘭縣宜蘭市中山路三段42-1號": { lat: 24.756084, lng: 121.752353 },
+  "宜蘭縣宜蘭市自強路107號": { lat: 24.743051, lng: 121.75176 },
+  "宜蘭縣羅東鎮公正路167之3號": { lat: 24.678883, lng: 121.768331 },
+  "花蓮縣花蓮市中華路373-7號": { lat: 23.974585, lng: 121.595169 },
+  "台東縣東河鄉都蘭96號": { lat: 22.875982, lng: 121.225755 },
+  "澎湖縣馬公市民生路27-3號": { lat: 23.567572, lng: 119.565374 },
+  "台南市東區東門路二段203號": { lat: 22.984812, lng: 120.2247 },
+  "台南市北區海安路三段247號": { lat: 23.00699, lng: 120.199736 },
+  "台南市善化區和平路179號": { lat: 23.131886, lng: 120.297887 },
+  "台南市新營區中山路236號": { lat: 23.303261, lng: 120.31482 },
+  "嘉義市東區民族路268巷7號": { lat: 23.47678, lng: 120.45424 },
+  "基隆市中正區義一路39號1樓": { lat: 25.133178, lng: 121.745636 },
+  "基隆市中正區義一路50號": { lat: 25.132884, lng: 121.745747 }
+};
+
+stationData.forEach((item) => {
+  Object.assign(item, stationCoordinates[item.address] || {});
+});
 
 function getLang() {
   return document.body.dataset.lang === "en" ? "en" : "zh";
@@ -470,15 +556,43 @@ function initPartnerFilter() {
   });
 }
 
+function toRadians(value) {
+  return (value * Math.PI) / 180;
+}
+
+function calculateDistanceKm(from, to) {
+  if (!from || !to || typeof to.lat !== "number" || typeof to.lng !== "number") return null;
+  const earthRadiusKm = 6371;
+  const dLat = toRadians(to.lat - from.lat);
+  const dLng = toRadians(to.lng - from.lng);
+  const lat1 = toRadians(from.lat);
+  const lat2 = toRadians(to.lat);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return earthRadiusKm * c;
+}
+
+function formatDistanceKm(value) {
+  if (typeof value !== "number") return "";
+  return value < 10 ? value.toFixed(1) : value.toFixed(0);
+}
+
 function buildStationCard(station) {
   const lang = getLang();
   const stationCopy = siteCopy[lang].station;
   const mapHref = `https://maps.google.com/?q=${encodeURIComponent(station.address)}`;
+  const distancePill =
+    typeof station.distanceKm === "number"
+      ? `<span class="pill pill--gold">${stationCopy.distanceLabel(formatDistanceKm(station.distanceKm))}</span>`
+      : "";
   return `
     <article class="result-card">
       <div class="result-card__meta">
         <span class="pill pill--primary">${formatLocationLabel("city", station.city)}</span>
         <span class="pill">${formatLocationLabel("district", station.district)}</span>
+        ${distancePill}
       </div>
       <h3 class="result-card__title">${station.name}</h3>
       <p class="card__body">${station.address}</p>
@@ -513,32 +627,83 @@ function populateSelect(select, options, placeholder, disabled, type) {
 function initStationDirectory() {
   const citySelect = document.querySelector("[data-station-city]");
   const districtSelect = document.querySelector("[data-station-district]");
+  const nearestButton = document.querySelector("[data-station-nearest]");
+  const radiusSelect = document.querySelector("[data-station-radius]");
+  const status = document.querySelector("[data-station-status]");
   const results = document.querySelector("[data-station-results]");
   const empty = document.querySelector("[data-station-empty]");
   const count = document.querySelector("[data-station-count]");
 
-  if (!citySelect || !districtSelect || !results || !empty || !count) return;
+  if (!citySelect || !districtSelect || !nearestButton || !radiusSelect || !status || !results || !empty || !count) return;
 
   const lang = getLang();
   const stationCopy = siteCopy[lang].station;
+  const radiusOptions = ["", "5", "10", "20", "50"];
+  const state = {
+    userLocation: null
+  };
   const cities = uniqueValues(stationData, "city");
   populateSelect(citySelect, cities, stationCopy.cityPlaceholder, false, "city");
   populateSelect(districtSelect, [], stationCopy.districtPlaceholder, true, "district");
+  radiusSelect.innerHTML = radiusOptions
+    .map((value) =>
+      `<option value="${value}">${value ? stationCopy.radiusLabel(value) : stationCopy.radiusPlaceholder}</option>`
+    )
+    .join("");
+  radiusSelect.disabled = true;
+  nearestButton.textContent = stationCopy.nearestButton;
 
   const getDistricts = (city) => {
     if (!city) return [];
     return uniqueValues(stationData.filter((item) => item.city === city), "district");
   };
 
+  const setStatus = (message, stateName = "info") => {
+    if (!message) {
+      status.hidden = true;
+      status.textContent = "";
+      status.dataset.state = "info";
+      return;
+    }
+
+    status.hidden = false;
+    status.dataset.state = stateName;
+    status.textContent = message;
+  };
+
   const render = () => {
     const city = citySelect.value;
     const district = districtSelect.value;
+    const radiusKm = Number(radiusSelect.value || 0);
 
-    const filtered = stationData.filter((item) => {
+    let filtered = stationData.filter((item) => {
       const matchesCity = !city || item.city === city;
       const matchesDistrict = !district || item.district === district;
       return matchesCity && matchesDistrict;
     });
+
+    filtered = filtered.map((item) => ({
+      ...item,
+      distanceKm: state.userLocation ? calculateDistanceKm(state.userLocation, item) : null
+    }));
+
+    if (state.userLocation && radiusKm > 0) {
+      filtered = filtered.filter((item) => typeof item.distanceKm === "number" && item.distanceKm <= radiusKm);
+    }
+
+    if (state.userLocation) {
+      filtered.sort((a, b) => {
+        const aDistance = typeof a.distanceKm === "number" ? a.distanceKm : Number.POSITIVE_INFINITY;
+        const bDistance = typeof b.distanceKm === "number" ? b.distanceKm : Number.POSITIVE_INFINITY;
+        return aDistance - bDistance;
+      });
+      setStatus(
+        radiusKm > 0 ? stationCopy.locationReadyWithRadius(radiusKm) : stationCopy.locationReady,
+        "info"
+      );
+    } else {
+      setStatus("");
+    }
 
     results.innerHTML = filtered.map((station) => buildStationCard(station)).join("");
     count.textContent = stationCopy.count(filtered.length);
@@ -552,6 +717,43 @@ function initStationDirectory() {
   });
 
   districtSelect.addEventListener("change", render);
+  radiusSelect.addEventListener("change", render);
+
+  nearestButton.addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      setStatus(stationCopy.locationUnsupported, "error");
+      return;
+    }
+
+    nearestButton.disabled = true;
+    setStatus(stationCopy.locating, "info");
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        state.userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        radiusSelect.disabled = false;
+        nearestButton.disabled = false;
+        render();
+      },
+      (error) => {
+        radiusSelect.disabled = true;
+        nearestButton.disabled = false;
+        if (error.code === error.PERMISSION_DENIED) {
+          setStatus(stationCopy.locationDenied, "error");
+          return;
+        }
+        setStatus(stationCopy.locationUnavailable, "error");
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000
+      }
+    );
+  });
 
   render();
 }

@@ -1395,6 +1395,14 @@ body[data-page="products"] .tabpanel .section__title {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.station-tool--location {
+  align-items: end;
+}
+
+.station-tool--location .btn {
+  width: 100%;
+}
+
 .station-results {
   display: grid;
   gap: 1rem;
