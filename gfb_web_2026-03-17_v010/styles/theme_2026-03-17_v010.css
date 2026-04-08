@@ -2425,9 +2425,15 @@ body[data-lang="en"][data-page="resources"] .resource-page-head__title {
   }
 }
 
+/* Keep English resource article titles readable on desktop. */
 @media (min-width: 961px) {
   body[data-lang="en"][data-page="resources"] .resource-page-head__title {
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  body[data-lang="en"][data-page="resources"] .resource-page-head__description {
+    overflow-wrap: anywhere;
   }
 }
 
