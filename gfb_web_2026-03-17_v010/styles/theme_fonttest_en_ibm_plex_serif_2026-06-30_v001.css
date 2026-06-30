@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600;700&display=swap");
+@import url("./theme_2026-03-17_v010.css");
+
+:root {
+  --font-display-en: "IBM Plex Serif", "Noto Serif TC", serif;
+}
