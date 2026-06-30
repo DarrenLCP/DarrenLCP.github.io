@@ -1342,7 +1342,7 @@ body[data-page="products"] .product-panel-head .section__description strong {
 }
 
 .reagent-kit-name__table th {
-  background: linear-gradient(135deg, var(--primary), #bd4b8b);
+  background: var(--primary);
   color: #fff;
   font-weight: 900;
   text-align: left;
