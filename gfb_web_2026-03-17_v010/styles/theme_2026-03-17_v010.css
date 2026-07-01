@@ -904,6 +904,25 @@ body[data-page="home"] .home-difference__list--reasons .home-difference__body p 
   background: transparent;
 }
 
+.related-product-grid .card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.related-product-grid .card__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 13rem;
+  padding: 0;
+}
+
+.related-product-grid .card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .card__title,
 .timeline__title,
 .result-card__title,
@@ -1659,6 +1678,11 @@ body[data-page="products"][data-lang="en"] .ctc-gallery-panel .section__title {
   margin: 0;
   color: var(--ink-soft);
   line-height: 1.85;
+}
+
+html[lang="zh-Hant"] .validation-card__body {
+  text-align: justify;
+  text-justify: inter-ideograph;
 }
 
 .validation-card__detail {
