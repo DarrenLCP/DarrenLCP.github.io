@@ -56,7 +56,7 @@ const siteCopy = {
       emailLabel: "Email：",
       emailValue: "info@gfmed.cc"
     },
-    footerLegal: "Copyright © 榮文生醫 Good Future BioMed. Inc. All Rights Reserved.",
+    footerLegal: "Copyright © 榮文生醫 Good Future BioMed. Corp. All Rights Reserved.",
     backToTopLabel: "回到頂端",
     station: {
       directions: "地圖導航",
@@ -130,7 +130,7 @@ const siteCopy = {
       emailLabel: "Email:",
       emailValue: "info@gfmed.cc"
     },
-    footerLegal: "Copyright © Good Future BioMed Inc. All Rights Reserved.",
+    footerLegal: "Copyright © Good Future BioMed. Corp. All Rights Reserved.",
     backToTopLabel: "Back to top",
     station: {
       directions: "Directions",
