@@ -1471,7 +1471,7 @@
       "gallery": [],
       "status": "active",
       "badge": "精選影片",
-      "videoUrl": "https://www.goodfuturebio.com/images/news/videos/1101_knowledge.mp4",
+      "embedUrl": "https://www.youtube.com/embed/YQZ-qzWV7U0",
       "href": "pages/resource-video-20221101-knowledge.html",
       "hrefEn": "pages/resource-video-20221101-knowledge_en.html"
     },
@@ -1490,7 +1490,7 @@
       "gallery": [],
       "status": "active",
       "badge": "精選影片",
-      "videoUrl": "https://www.goodfuturebio.com/images/news/videos/202209_CCH%20event_30s.mp4",
+      "embedUrl": "https://www.youtube.com/embed/0UsOeQ7NtXY",
       "href": "pages/resource-video-20220906-ttsmartmedical.html",
       "hrefEn": "pages/resource-video-20220906-ttsmartmedical_en.html"
     },

@@ -514,13 +514,39 @@ function initTabs() {
     const buttons = [...group.querySelectorAll('[role="tab"]')];
     const panels = [...group.querySelectorAll('[role="tabpanel"]')];
 
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const target = button.getAttribute("aria-controls");
-        buttons.forEach((item) => item.setAttribute("aria-selected", String(item === button)));
-        panels.forEach((panel) => {
-          panel.hidden = panel.id !== target;
-        });
+    const activateTab = (button, moveFocus = false) => {
+      const target = button.getAttribute("aria-controls");
+      const activeIndex = buttons.indexOf(button);
+
+      group.querySelector('[role="tablist"]')?.setAttribute("data-active-index", String(activeIndex));
+      buttons.forEach((item) => {
+        const isActive = item === button;
+        item.setAttribute("aria-selected", String(isActive));
+        item.tabIndex = isActive ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.id !== target;
+      });
+
+      if (moveFocus) button.focus();
+    };
+
+    const initialButton = buttons.find((button) => button.getAttribute("aria-selected") === "true") || buttons[0];
+    if (initialButton) activateTab(initialButton);
+
+    buttons.forEach((button, index) => {
+      button.addEventListener("click", () => activateTab(button));
+      button.addEventListener("keydown", (event) => {
+        let nextIndex = index;
+
+        if (event.key === "ArrowRight") nextIndex = (index + 1) % buttons.length;
+        else if (event.key === "ArrowLeft") nextIndex = (index - 1 + buttons.length) % buttons.length;
+        else if (event.key === "Home") nextIndex = 0;
+        else if (event.key === "End") nextIndex = buttons.length - 1;
+        else return;
+
+        event.preventDefault();
+        activateTab(buttons[nextIndex], true);
       });
     });
   });
