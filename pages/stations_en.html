@@ -32,41 +32,53 @@
           <div class="container" data-station-directory>
             <div class="section__head fade-in">
               <span class="eyebrow">Search Tool</span>
-              <h2 class="section__title">Search by city and district</h2>
-              <p class="section__description">If you have not selected a region, you can first select a county or city to view the cooperation bases in that region.</p>
+              <h2 class="section__title">Choose how you want to find a site</h2>
+              <p class="section__description">Filter by city and district, or use your current location to find nearby partner sites.</p>
             </div>
-            <div class="station-tool fade-in">
-              <label class="field">
-                <span class="field__label">Please select a county or city</span>
-                <select class="select" data-station-city></select>
-              </label>
-              <label class="field">
-                <span class="field__label">Please select a region</span>
-                <select class="select" data-station-district></select>
-              </label>
+            <div class="tabs tabs--segmented tabs--slider station-mode-switch fade-in" role="tablist" aria-label="Site search method" data-active-index="0">
+              <button class="tab-button station-mode-button" id="station-mode-region" type="button" role="tab" aria-selected="true" aria-controls="station-panel-region" data-station-mode="region">
+                Search by area
+              </button>
+              <button class="tab-button station-mode-button" id="station-mode-nearby" type="button" role="tab" aria-selected="false" aria-controls="station-panel-nearby" data-station-mode="nearby">
+                Search nearby
+              </button>
             </div>
-            <div class="station-tool station-tool--location fade-in">
-              <button class="btn btn--secondary" type="button" data-station-nearest>Find the nearest site</button>
-              <label class="field">
-                <span class="field__label">Distance range</span>
-                <select class="select" data-station-radius></select>
-              </label>
+            <div class="station-query-panel" id="station-panel-region" role="tabpanel" aria-labelledby="station-mode-region" data-station-mode-panel="region">
+              <div class="station-tool fade-in">
+                <label class="field">
+                  <span class="field__label">1. Select a city</span>
+                  <select class="select" data-station-city></select>
+                </label>
+                <label class="field">
+                  <span class="field__label">2. Select a district</span>
+                  <select class="select" data-station-district></select>
+                </label>
+              </div>
             </div>
-            <p class="status-note" data-station-status hidden></p>
-            <div class="note fade-in">
-              <strong>How to use:</strong>Select a county or city and district first, or allow location access to see the nearest partner sites and results within a selected distance.</div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="container" data-station-directory>
-            <div class="section__head fade-in">
-              <span class="eyebrow">Search Results</span>
-              <h2 class="section__title">Blood Collection Partner Directory</h2>
-              <p class="section__meta" data-station-count>Currently showing 59 strongholds</p>
+            <div class="station-query-panel" id="station-panel-nearby" role="tabpanel" aria-labelledby="station-mode-nearby" data-station-mode-panel="nearby" hidden>
+              <div class="station-tool station-tool--location fade-in">
+                <div class="station-location-action">
+                  <span class="field__label">Current location</span>
+                  <button class="btn btn--secondary" type="button" data-station-nearest>Find the nearest site</button>
+                </div>
+                <label class="field" data-station-radius-field hidden>
+                  <span class="field__label">Distance range</span>
+                  <select class="select" data-station-radius></select>
+                </label>
+              </div>
             </div>
-            <div class="station-results" data-station-results></div>
-            <p class="results-empty" data-station-empty hidden>There are currently no locations that meet the criteria. Please adjust the filter conditions or contact Good Future directly.</p>
+            <p class="status-note" role="status" aria-live="polite" data-station-status hidden></p>
+            <div class="station-results-block">
+              <div class="station-results-heading fade-in" data-station-results-summary>
+                <div>
+                  <span class="eyebrow">Search Results</span>
+                  <h2 class="section__title" id="station-results-title">Blood Collection Partner Directory</h2>
+                </div>
+                <p class="station-results-count" aria-live="polite" data-station-count>Showing 61 sites</p>
+              </div>
+              <div class="station-results" aria-labelledby="station-results-title" data-station-results></div>
+              <p class="results-empty" data-station-empty hidden>There are currently no locations that meet the criteria. Please adjust the filter conditions or contact Good Future directly.</p>
+            </div>
           </div>
         </section>
 

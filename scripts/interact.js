@@ -71,6 +71,7 @@ const siteCopy = {
       locationUnsupported: "目前瀏覽器不支援定位功能，請改用縣市與區域查詢。",
       locationDenied: "你尚未授權定位，請允許位置存取後再試一次。",
       locationUnavailable: "暫時無法取得位置資訊，請稍後再試。",
+      locationPrompt: "請使用目前位置開始搜尋；若無法授權，可切回行政區搜尋。",
       distanceLabel: (value) => `距離你約 ${value} 公里`,
       count: (value) => `目前顯示 ${value} 筆據點`
     },
@@ -145,6 +146,7 @@ const siteCopy = {
       locationUnsupported: "Geolocation is not supported in this browser. Please use the city and district filters instead.",
       locationDenied: "Location access was denied. Please allow it and try again.",
       locationUnavailable: "Your location could not be determined right now. Please try again later.",
+      locationPrompt: "Use your current location to start a nearby search, or switch back to area search.",
       distanceLabel: (value) => `About ${value} km away`,
       count: (value) => `Showing ${value} sites`
     },
@@ -178,6 +180,7 @@ const locationLabels = {
     台東縣: "Taitung County",
     澎湖縣: "Penghu County",
     台南市: "Tainan City",
+    嘉義縣: "Chiayi County",
     嘉義市: "Chiayi City",
     基隆市: "Keelung City"
   },
@@ -189,6 +192,7 @@ const locationLabels = {
     士林區: "Shilin District",
     松山區: "Songshan District",
     中正區: "Zhongzheng District",
+    大同區: "Datong District",
     板橋區: "Banqiao District",
     三重區: "Sanchong District",
     新莊區: "Xinzhuang District",
@@ -226,7 +230,8 @@ const locationLabels = {
     東河鄉: "Donghe Township",
     馬公市: "Magong City",
     善化區: "Shanhua District",
-    新營區: "Xinying District"
+    新營區: "Xinying District",
+    梅山鄉: "Meishan Township"
   }
 };
 
@@ -241,6 +246,8 @@ const stationData = [
   { city: "台北市", district: "士林區", name: "愛林診所", address: "台北市士林區承德路四段222號" },
   { city: "台北市", district: "松山區", name: "立人醫事檢驗所", address: "台北市松山區敦化北路153-2號2樓" },
   { city: "台北市", district: "中正區", name: "杏聯醫事檢驗所", address: "台北市中正區汀州路二段38號B1" },
+  { city: "台北市", district: "信義區", name: "吉兆診所", address: "台北市信義區松仁路176號" },
+  { city: "台北市", district: "大同區", name: "中山X光醫事檢驗所", address: "台北市大同區南京西路216號" },
   { city: "新北市", district: "板橋區", name: "中一醫事檢驗所", address: "新北市板橋區館前西路6號7樓之1" },
   { city: "新北市", district: "三重區", name: "健詮醫事檢驗所", address: "新北市三重區光復路二段80號10樓" },
   { city: "新北市", district: "新莊區", name: "亞東醫事檢驗所", address: "新北市新莊區復興路一段111號" },
@@ -287,9 +294,9 @@ const stationData = [
   { city: "台南市", district: "北區", name: "尚捷醫事檢驗所", address: "台南市北區海安路三段247號" },
   { city: "台南市", district: "善化區", name: "南光醫事檢驗所", address: "台南市善化區和平路179號" },
   { city: "台南市", district: "新營區", name: "現代醫事檢驗所", address: "台南市新營區中山路236號" },
+  { city: "嘉義縣", district: "梅山鄉", name: "達慶醫事檢驗所", address: "嘉義縣梅山鄉中山路381號" },
   { city: "嘉義市", district: "東區", name: "嘉義祐健醫事檢驗所", address: "嘉義市東區民族路268巷7號" },
-  { city: "基隆市", district: "中正區", name: "晉安診所", address: "基隆市中正區義一路39號1樓" },
-  { city: "基隆市", district: "中正區", name: "中台X光醫事檢驗所", address: "基隆市中正區義一路50號" }
+  { city: "基隆市", district: "中正區", name: "晉安診所", address: "基隆市中正區義一路39號1樓" }
 ];
 
 const stationCoordinates = {
@@ -303,6 +310,8 @@ const stationCoordinates = {
   "台北市士林區承德路四段222號": { lat: 25.088456, lng: 121.521499 },
   "台北市松山區敦化北路153-2號2樓": { lat: 25.054211, lng: 121.549539 },
   "台北市中正區汀州路二段38號B1": { lat: 25.02537, lng: 121.517494 },
+  "台北市信義區松仁路176號": { lat: 25.0280286, lng: 121.5682243 },
+  "台北市大同區南京西路216號": { lat: 25.0533176, lng: 121.5166987 },
   "新北市板橋區館前西路6號7樓之1": { lat: 25.007125, lng: 121.459123 },
   "新北市三重區光復路二段80號10樓": { lat: 25.056961, lng: 121.471945 },
   "新北市新莊區復興路一段111號": { lat: 25.043111, lng: 121.449311 },
@@ -349,9 +358,9 @@ const stationCoordinates = {
   "台南市北區海安路三段247號": { lat: 23.00699, lng: 120.199736 },
   "台南市善化區和平路179號": { lat: 23.131886, lng: 120.297887 },
   "台南市新營區中山路236號": { lat: 23.303261, lng: 120.31482 },
+  "嘉義縣梅山鄉中山路381號": { lat: 23.5851425, lng: 120.5546031 },
   "嘉義市東區民族路268巷7號": { lat: 23.47678, lng: 120.45424 },
-  "基隆市中正區義一路39號1樓": { lat: 25.133178, lng: 121.745636 },
-  "基隆市中正區義一路50號": { lat: 25.132884, lng: 121.745747 }
+  "基隆市中正區義一路39號1樓": { lat: 25.133178, lng: 121.745636 }
 };
 
 stationData.forEach((item) => {
@@ -564,20 +573,6 @@ function initFaqs() {
   });
 }
 
-function initPartnerFilter() {
-  const input = document.querySelector("[data-partner-search]");
-  if (!input) return;
-
-  const rows = [...document.querySelectorAll("[data-partner-row]")];
-  input.addEventListener("input", () => {
-    const keyword = input.value.trim().toLowerCase();
-    rows.forEach((row) => {
-      const haystack = `${row.dataset.search || ""} ${row.textContent || ""}`.toLowerCase();
-      row.hidden = !haystack.includes(keyword);
-    });
-  });
-}
-
 function toRadians(value) {
   return (value * Math.PI) / 180;
 }
@@ -651,17 +646,39 @@ function initStationDirectory() {
   const districtSelect = document.querySelector("[data-station-district]");
   const nearestButton = document.querySelector("[data-station-nearest]");
   const radiusSelect = document.querySelector("[data-station-radius]");
+  const radiusField = document.querySelector("[data-station-radius-field]");
+  const modeSwitch = document.querySelector(".station-mode-switch");
+  const modeButtons = [...document.querySelectorAll("[data-station-mode]")];
+  const modePanels = [...document.querySelectorAll("[data-station-mode-panel]")];
   const status = document.querySelector("[data-station-status]");
   const results = document.querySelector("[data-station-results]");
+  const resultsSummary = document.querySelector("[data-station-results-summary]");
   const empty = document.querySelector("[data-station-empty]");
   const count = document.querySelector("[data-station-count]");
 
-  if (!citySelect || !districtSelect || !nearestButton || !radiusSelect || !status || !results || !empty || !count) return;
+  if (
+    !citySelect ||
+    !districtSelect ||
+    !nearestButton ||
+    !radiusSelect ||
+    !radiusField ||
+    !modeSwitch ||
+    modeButtons.length === 0 ||
+    modePanels.length === 0 ||
+    !status ||
+    !results ||
+    !resultsSummary ||
+    !empty ||
+    !count
+  ) {
+    return;
+  }
 
   const lang = getLang();
   const stationCopy = siteCopy[lang].station;
   const radiusOptions = ["", "5", "10", "20", "50"];
   const state = {
+    mode: "region",
     userLocation: null
   };
   const cities = uniqueValues(stationData, "city");
@@ -673,6 +690,7 @@ function initStationDirectory() {
     )
     .join("");
   radiusSelect.disabled = true;
+  radiusField.hidden = true;
   nearestButton.textContent = stationCopy.nearestButton;
 
   const getDistricts = (city) => {
@@ -693,53 +711,120 @@ function initStationDirectory() {
     status.textContent = message;
   };
 
-  const render = () => {
+  const notifyResults = (scrollToResults = false) => {
+    count.classList.remove("is-updated");
+    window.requestAnimationFrame(() => count.classList.add("is-updated"));
+
+    if (!scrollToResults || !window.matchMedia("(max-width: 720px)").matches) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.requestAnimationFrame(() => {
+      resultsSummary.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+  };
+
+  const render = ({ announce = false, scrollToResults = false } = {}) => {
     const city = citySelect.value;
     const district = districtSelect.value;
     const radiusKm = Number(radiusSelect.value || 0);
 
-    let filtered = stationData.filter((item) => {
-      const matchesCity = !city || item.city === city;
-      const matchesDistrict = !district || item.district === district;
-      return matchesCity && matchesDistrict;
-    });
+    let filtered = stationData;
 
-    filtered = filtered.map((item) => ({
-      ...item,
-      distanceKm: state.userLocation ? calculateDistanceKm(state.userLocation, item) : null
-    }));
-
-    if (state.userLocation && radiusKm > 0) {
-      filtered = filtered.filter((item) => typeof item.distanceKm === "number" && item.distanceKm <= radiusKm);
-    }
-
-    if (state.userLocation) {
-      filtered.sort((a, b) => {
-        const aDistance = typeof a.distanceKm === "number" ? a.distanceKm : Number.POSITIVE_INFINITY;
-        const bDistance = typeof b.distanceKm === "number" ? b.distanceKm : Number.POSITIVE_INFINITY;
-        return aDistance - bDistance;
-      });
-      setStatus(
-        radiusKm > 0 ? stationCopy.locationReadyWithRadius(radiusKm) : stationCopy.locationReady,
-        "info"
-      );
-    } else {
+    if (state.mode === "region") {
+      filtered = filtered
+        .filter((item) => {
+          const matchesCity = !city || item.city === city;
+          const matchesDistrict = !district || item.district === district;
+          return matchesCity && matchesDistrict;
+        })
+        .map((item) => ({
+          ...item,
+          distanceKm: null
+        }));
       setStatus("");
+    } else {
+      filtered = filtered.map((item) => ({
+        ...item,
+        distanceKm: state.userLocation ? calculateDistanceKm(state.userLocation, item) : null
+      }));
+
+      if (state.userLocation && radiusKm > 0) {
+        filtered = filtered.filter((item) => typeof item.distanceKm === "number" && item.distanceKm <= radiusKm);
+      }
+
+      if (state.userLocation) {
+        filtered.sort((a, b) => {
+          const aDistance = typeof a.distanceKm === "number" ? a.distanceKm : Number.POSITIVE_INFINITY;
+          const bDistance = typeof b.distanceKm === "number" ? b.distanceKm : Number.POSITIVE_INFINITY;
+          return aDistance - bDistance;
+        });
+        setStatus(
+          radiusKm > 0 ? stationCopy.locationReadyWithRadius(radiusKm) : stationCopy.locationReady,
+          "info"
+        );
+      } else {
+        setStatus(stationCopy.locationPrompt, "info");
+      }
     }
 
     results.innerHTML = filtered.map((station) => buildStationCard(station)).join("");
     count.textContent = stationCopy.count(filtered.length);
     empty.hidden = filtered.length !== 0;
+
+    if (announce) notifyResults(scrollToResults);
+  };
+
+  const activateMode = (button, moveFocus = false, announce = true) => {
+    state.mode = button.dataset.stationMode === "nearby" ? "nearby" : "region";
+    modeSwitch.dataset.activeIndex = String(modeButtons.indexOf(button));
+
+    modeButtons.forEach((item) => {
+      const isActive = item === button;
+      item.setAttribute("aria-selected", String(isActive));
+      item.tabIndex = isActive ? 0 : -1;
+    });
+    modePanels.forEach((panel) => {
+      panel.hidden = panel.dataset.stationModePanel !== state.mode;
+    });
+
+    radiusField.hidden = state.mode !== "nearby" || !state.userLocation;
+    radiusSelect.disabled = !state.userLocation;
+    render({ announce });
+
+    if (moveFocus) button.focus();
   };
 
   citySelect.addEventListener("change", () => {
     const districts = getDistricts(citySelect.value);
     populateSelect(districtSelect, districts, stationCopy.districtPlaceholder, districts.length === 0, "district");
-    render();
+    render({ announce: true });
   });
 
-  districtSelect.addEventListener("change", render);
-  radiusSelect.addEventListener("change", render);
+  districtSelect.addEventListener("change", () => {
+    render({ announce: true, scrollToResults: true });
+  });
+
+  radiusSelect.addEventListener("change", () => {
+    render({ announce: true, scrollToResults: true });
+  });
+
+  modeButtons.forEach((button, index) => {
+    button.addEventListener("click", () => activateMode(button));
+    button.addEventListener("keydown", (event) => {
+      let nextIndex = index;
+
+      if (event.key === "ArrowRight") nextIndex = (index + 1) % modeButtons.length;
+      else if (event.key === "ArrowLeft") nextIndex = (index - 1 + modeButtons.length) % modeButtons.length;
+      else if (event.key === "Home") nextIndex = 0;
+      else if (event.key === "End") nextIndex = modeButtons.length - 1;
+      else return;
+
+      event.preventDefault();
+      activateMode(modeButtons[nextIndex], true);
+    });
+  });
 
   nearestButton.addEventListener("click", () => {
     if (!navigator.geolocation) {
@@ -757,11 +842,15 @@ function initStationDirectory() {
           lng: position.coords.longitude
         };
         radiusSelect.disabled = false;
+        radiusField.hidden = false;
         nearestButton.disabled = false;
-        render();
+        render({ announce: true, scrollToResults: true });
       },
       (error) => {
+        state.userLocation = null;
+        radiusSelect.value = "";
         radiusSelect.disabled = true;
+        radiusField.hidden = true;
         nearestButton.disabled = false;
         if (error.code === error.PERMISSION_DENIED) {
           setStatus(stationCopy.locationDenied, "error");
@@ -777,7 +866,9 @@ function initStationDirectory() {
     );
   });
 
-  render();
+  const initialModeButton =
+    modeButtons.find((button) => button.getAttribute("aria-selected") === "true") || modeButtons[0];
+  activateMode(initialModeButton, false, false);
 }
 
 function initContactComposer() {
@@ -930,7 +1021,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initChrome();
   initTabs();
   initFaqs();
-  initPartnerFilter();
   initStationDirectory();
   initContactComposer();
   initBackToTop();

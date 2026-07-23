@@ -37,43 +37,53 @@
           <div class="container" data-station-directory>
             <div class="section__head fade-in">
               <span class="eyebrow">查詢工具</span>
-              <h2 class="section__title">請依序選擇縣市與區域</h2>
-              <p class="section__description">若尚未選定區域，可先選擇縣市查看該地區的合作據點。</p>
+              <h2 class="section__title">選擇適合您的據點查詢方式</h2>
+              <p class="section__description">可依縣市與區域篩選，或使用目前位置搜尋附近的合作據點。</p>
             </div>
-            <div class="station-tool fade-in">
-              <label class="field">
-                <span class="field__label">請選擇縣市</span>
-                <select class="select" data-station-city></select>
-              </label>
-              <label class="field">
-                <span class="field__label">請選擇區域</span>
-                <select class="select" data-station-district></select>
-              </label>
+            <div class="tabs tabs--segmented tabs--slider station-mode-switch fade-in" role="tablist" aria-label="據點查詢方式" data-active-index="0">
+              <button class="tab-button station-mode-button" id="station-mode-region" type="button" role="tab" aria-selected="true" aria-controls="station-panel-region" data-station-mode="region">
+                依行政區搜尋
+              </button>
+              <button class="tab-button station-mode-button" id="station-mode-nearby" type="button" role="tab" aria-selected="false" aria-controls="station-panel-nearby" data-station-mode="nearby">
+                搜尋我附近
+              </button>
             </div>
-            <div class="station-tool station-tool--location fade-in">
-              <button class="btn btn--secondary" type="button" data-station-nearest>查詢離我最近的據點</button>
-              <label class="field">
-                <span class="field__label">距離範圍</span>
-                <select class="select" data-station-radius></select>
-              </label>
+            <div class="station-query-panel" id="station-panel-region" role="tabpanel" aria-labelledby="station-mode-region" data-station-mode-panel="region">
+              <div class="station-tool fade-in">
+                <label class="field">
+                  <span class="field__label">1. 選擇縣市</span>
+                  <select class="select" data-station-city></select>
+                </label>
+                <label class="field">
+                  <span class="field__label">2. 選擇區域</span>
+                  <select class="select" data-station-district></select>
+                </label>
+              </div>
             </div>
-            <p class="status-note" data-station-status hidden></p>
-            <div class="note fade-in">
-              <strong>使用方式：</strong>
-              可先依縣市與區域查詢，或授權目前位置後查看離你最近的合作據點與幾公里內的名單。
+            <div class="station-query-panel" id="station-panel-nearby" role="tabpanel" aria-labelledby="station-mode-nearby" data-station-mode-panel="nearby" hidden>
+              <div class="station-tool station-tool--location fade-in">
+                <div class="station-location-action">
+                  <span class="field__label">目前位置</span>
+                  <button class="btn btn--secondary" type="button" data-station-nearest>查詢離我最近的據點</button>
+                </div>
+                <label class="field" data-station-radius-field hidden>
+                  <span class="field__label">距離範圍</span>
+                  <select class="select" data-station-radius></select>
+                </label>
+              </div>
             </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="container" data-station-directory>
-            <div class="section__head fade-in">
-              <span class="eyebrow">查詢結果</span>
-              <h2 class="section__title">合作抽血據點名單</h2>
-              <p class="section__meta" data-station-count>目前顯示 59 筆據點</p>
+            <p class="status-note" role="status" aria-live="polite" data-station-status hidden></p>
+            <div class="station-results-block">
+              <div class="station-results-heading fade-in" data-station-results-summary>
+                <div>
+                  <span class="eyebrow">查詢結果</span>
+                  <h2 class="section__title" id="station-results-title">合作抽血據點名單</h2>
+                </div>
+                <p class="station-results-count" aria-live="polite" data-station-count>目前顯示 61 筆據點</p>
+              </div>
+              <div class="station-results" aria-labelledby="station-results-title" data-station-results></div>
+              <p class="results-empty" data-station-empty hidden>目前沒有符合條件的據點，請調整篩選條件或直接與榮文生醫聯繫。</p>
             </div>
-            <div class="station-results" data-station-results></div>
-            <p class="results-empty" data-station-empty hidden>目前沒有符合條件的據點，請調整篩選條件或直接與榮文生醫聯繫。</p>
           </div>
         </section>
 
