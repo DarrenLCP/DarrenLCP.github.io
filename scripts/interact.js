@@ -633,12 +633,242 @@ function formatLocationLabel(type, value) {
   return locationLabels[type]?.[value] || value;
 }
 
+const enhancedSelectControls = new WeakMap();
+let openEnhancedSelectControl = null;
+let enhancedSelectId = 0;
+
+function refreshEnhancedSelect(select) {
+  enhancedSelectControls.get(select)?.refresh();
+}
+
+function enhanceSelect(select) {
+  if (enhancedSelectControls.has(select)) return enhancedSelectControls.get(select);
+
+  const field = select.closest(".field");
+  const label = field?.querySelector(".field__label");
+  const baseId = select.id || `enhanced-select-${++enhancedSelectId}`;
+  const nativeId = `${baseId}-native`;
+  const labelId = `${baseId}-label`;
+  const valueId = `${baseId}-value`;
+  const listboxId = `${baseId}-listbox`;
+  const wrapper = document.createElement("div");
+  const trigger = document.createElement("button");
+  const value = document.createElement("span");
+  const listbox = document.createElement("div");
+  let optionElements = [];
+  let activeIndex = 0;
+  let typeahead = "";
+  let typeaheadTimer = 0;
+
+  wrapper.className = "custom-select";
+  trigger.className = "custom-select__trigger";
+  trigger.type = "button";
+  trigger.id = baseId;
+  trigger.setAttribute("role", "combobox");
+  trigger.setAttribute("aria-haspopup", "listbox");
+  trigger.setAttribute("aria-expanded", "false");
+  trigger.setAttribute("aria-controls", listboxId);
+  value.className = "custom-select__value";
+  value.id = valueId;
+  trigger.append(value);
+
+  listbox.className = "custom-select__listbox";
+  listbox.id = listboxId;
+  listbox.setAttribute("role", "listbox");
+  listbox.hidden = true;
+  wrapper.append(trigger, listbox);
+
+  if (label) {
+    label.id ||= labelId;
+    label.htmlFor = baseId;
+    trigger.setAttribute("aria-labelledby", `${label.id} ${valueId}`);
+    listbox.setAttribute("aria-labelledby", label.id);
+  } else {
+    trigger.setAttribute("aria-labelledby", valueId);
+  }
+
+  select.id = nativeId;
+  select.classList.add("select--enhanced-native");
+  select.tabIndex = -1;
+  select.setAttribute("aria-hidden", "true");
+  select.insertAdjacentElement("afterend", wrapper);
+
+  const isOpen = () => trigger.getAttribute("aria-expanded") === "true";
+
+  const updateActiveOption = (scrollIntoView = false) => {
+    optionElements.forEach((option, index) => {
+      option.classList.toggle("is-active", index === activeIndex);
+    });
+
+    const activeOption = optionElements[activeIndex];
+    if (!isOpen() || !activeOption) {
+      trigger.removeAttribute("aria-activedescendant");
+      return;
+    }
+
+    trigger.setAttribute("aria-activedescendant", activeOption.id);
+    if (scrollIntoView) activeOption.scrollIntoView({ block: "nearest" });
+  };
+
+  const close = ({ restoreFocus = false } = {}) => {
+    wrapper.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
+    listbox.hidden = true;
+    trigger.removeAttribute("aria-activedescendant");
+    if (openEnhancedSelectControl === control) openEnhancedSelectControl = null;
+    if (restoreFocus) trigger.focus();
+  };
+
+  const open = () => {
+    if (trigger.disabled || optionElements.length === 0) return;
+    if (openEnhancedSelectControl && openEnhancedSelectControl !== control) {
+      openEnhancedSelectControl.close();
+    }
+
+    openEnhancedSelectControl = control;
+    activeIndex = Math.max(0, select.selectedIndex);
+    wrapper.classList.add("is-open");
+    trigger.setAttribute("aria-expanded", "true");
+    listbox.hidden = false;
+    updateActiveOption(true);
+  };
+
+  const selectOption = (index) => {
+    if (!select.options[index] || select.options[index].disabled) return;
+    select.selectedIndex = index;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+    close({ restoreFocus: true });
+  };
+
+  const moveActiveOption = (amount) => {
+    if (optionElements.length === 0) return;
+    activeIndex = (activeIndex + amount + optionElements.length) % optionElements.length;
+    updateActiveOption(true);
+  };
+
+  const moveToOption = (index) => {
+    if (optionElements.length === 0) return;
+    activeIndex = Math.max(0, Math.min(index, optionElements.length - 1));
+    updateActiveOption(true);
+  };
+
+  const handleTypeahead = (event) => {
+    if (
+      event.key.length !== 1 ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.key === " "
+    ) {
+      return false;
+    }
+
+    window.clearTimeout(typeaheadTimer);
+    typeahead += event.key.toLocaleLowerCase();
+    typeaheadTimer = window.setTimeout(() => {
+      typeahead = "";
+    }, 700);
+
+    const startIndex = isOpen() ? activeIndex + 1 : Math.max(0, select.selectedIndex);
+    const indexes = optionElements.map((_, index) => (startIndex + index) % optionElements.length);
+    const matchIndex = indexes.find((index) =>
+      optionElements[index].textContent.trim().toLocaleLowerCase().startsWith(typeahead)
+    );
+
+    if (matchIndex === undefined) return true;
+    if (!isOpen()) open();
+    moveToOption(matchIndex);
+    return true;
+  };
+
+  const refresh = () => {
+    listbox.replaceChildren();
+    optionElements = [...select.options].map((nativeOption, index) => {
+      const option = document.createElement("div");
+      option.className = "custom-select__option";
+      option.id = `${baseId}-option-${index}`;
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", String(index === select.selectedIndex));
+      option.textContent = nativeOption.textContent;
+      option.addEventListener("pointerdown", (event) => event.preventDefault());
+      option.addEventListener("click", () => selectOption(index));
+      listbox.append(option);
+      return option;
+    });
+
+    const selectedOption = select.options[select.selectedIndex] || select.options[0];
+    value.textContent = selectedOption?.textContent || "";
+    trigger.disabled = select.disabled;
+    trigger.classList.toggle("is-placeholder", !selectedOption?.value);
+    activeIndex = Math.max(0, select.selectedIndex);
+
+    optionElements.forEach((option, index) => {
+      option.setAttribute("aria-selected", String(index === select.selectedIndex));
+    });
+    updateActiveOption();
+
+    if (select.disabled) close();
+  };
+
+  const control = { close, open, refresh };
+  enhancedSelectControls.set(select, control);
+
+  trigger.addEventListener("click", () => {
+    if (isOpen()) close();
+    else open();
+  });
+
+  trigger.addEventListener("keydown", (event) => {
+    if (handleTypeahead(event)) {
+      event.preventDefault();
+      return;
+    }
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      if (!isOpen()) open();
+      moveActiveOption(event.key === "ArrowDown" ? 1 : -1);
+      return;
+    }
+
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      if (!isOpen()) open();
+      moveToOption(event.key === "Home" ? 0 : optionElements.length - 1);
+      return;
+    }
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      if (isOpen()) selectOption(activeIndex);
+      else open();
+      return;
+    }
+
+    if (event.key === "Escape" && isOpen()) {
+      event.preventDefault();
+      close({ restoreFocus: true });
+    } else if (event.key === "Tab") {
+      close();
+    }
+  });
+
+  select.addEventListener("change", refresh);
+  document.addEventListener("pointerdown", (event) => {
+    if (isOpen() && !wrapper.contains(event.target)) close();
+  });
+
+  refresh();
+  return control;
+}
+
 function populateSelect(select, options, placeholder, disabled, type) {
   select.innerHTML = [
     `<option value="">${placeholder}</option>`,
     ...options.map((value) => `<option value="${value}">${formatLocationLabel(type, value)}</option>`)
   ].join("");
   select.disabled = disabled;
+  refreshEnhancedSelect(select);
 }
 
 function initStationDirectory() {
@@ -692,6 +922,7 @@ function initStationDirectory() {
   radiusSelect.disabled = true;
   radiusField.hidden = true;
   nearestButton.textContent = stationCopy.nearestButton;
+  [citySelect, districtSelect, radiusSelect].forEach(enhanceSelect);
 
   const getDistricts = (city) => {
     if (!city) return [];
@@ -791,6 +1022,7 @@ function initStationDirectory() {
 
     radiusField.hidden = state.mode !== "nearby" || !state.userLocation;
     radiusSelect.disabled = !state.userLocation;
+    refreshEnhancedSelect(radiusSelect);
     render({ announce });
 
     if (moveFocus) button.focus();
@@ -843,6 +1075,7 @@ function initStationDirectory() {
         };
         radiusSelect.disabled = false;
         radiusField.hidden = false;
+        refreshEnhancedSelect(radiusSelect);
         nearestButton.disabled = false;
         render({ announce: true, scrollToResults: true });
       },
@@ -851,6 +1084,7 @@ function initStationDirectory() {
         radiusSelect.value = "";
         radiusSelect.disabled = true;
         radiusField.hidden = true;
+        refreshEnhancedSelect(radiusSelect);
         nearestButton.disabled = false;
         if (error.code === error.PERMISSION_DENIED) {
           setStatus(stationCopy.locationDenied, "error");

@@ -45,19 +45,19 @@
                 依行政區搜尋
               </button>
               <button class="tab-button station-mode-button" id="station-mode-nearby" type="button" role="tab" aria-selected="false" aria-controls="station-panel-nearby" data-station-mode="nearby">
-                搜尋我附近
+                根據我的位置搜尋
               </button>
             </div>
             <div class="station-query-panel" id="station-panel-region" role="tabpanel" aria-labelledby="station-mode-region" data-station-mode-panel="region">
               <div class="station-tool fade-in">
-                <label class="field">
-                  <span class="field__label">1. 選擇縣市</span>
-                  <select class="select" data-station-city></select>
-                </label>
-                <label class="field">
-                  <span class="field__label">2. 選擇區域</span>
-                  <select class="select" data-station-district></select>
-                </label>
+                <div class="field">
+                  <label class="field__label" for="station-city">1. 選擇縣市</label>
+                  <select class="select" id="station-city" data-station-city></select>
+                </div>
+                <div class="field">
+                  <label class="field__label" for="station-district">2. 選擇區域</label>
+                  <select class="select" id="station-district" data-station-district></select>
+                </div>
               </div>
             </div>
             <div class="station-query-panel" id="station-panel-nearby" role="tabpanel" aria-labelledby="station-mode-nearby" data-station-mode-panel="nearby" hidden>
@@ -66,10 +66,10 @@
                   <span class="field__label">目前位置</span>
                   <button class="btn btn--secondary" type="button" data-station-nearest>查詢離我最近的據點</button>
                 </div>
-                <label class="field" data-station-radius-field hidden>
-                  <span class="field__label">距離範圍</span>
-                  <select class="select" data-station-radius></select>
-                </label>
+                <div class="field" data-station-radius-field hidden>
+                  <label class="field__label" for="station-radius">距離範圍</label>
+                  <select class="select" id="station-radius" data-station-radius></select>
+                </div>
               </div>
             </div>
             <p class="status-note" role="status" aria-live="polite" data-station-status hidden></p>
