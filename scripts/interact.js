@@ -522,8 +522,40 @@ function initTabs() {
   document.querySelectorAll("[data-tabs]").forEach((group) => {
     const buttons = [...group.querySelectorAll('[role="tab"]')];
     const panels = [...group.querySelectorAll('[role="tabpanel"]')];
+    const stateKey = group.dataset.tabStateKey || "";
 
-    const activateTab = (button, moveFocus = false) => {
+    const getSavedTab = () => {
+      if (!stateKey) return null;
+      const tabsState = window.history.state?.tabs;
+      const target = tabsState && typeof tabsState === "object" ? tabsState[stateKey] : "";
+      return buttons.find((button) => button.getAttribute("aria-controls") === target) || null;
+    };
+
+    const saveActiveTab = (button) => {
+      if (!stateKey || typeof window.history.replaceState !== "function") return;
+
+      const currentState =
+        window.history.state && typeof window.history.state === "object" && !Array.isArray(window.history.state)
+          ? window.history.state
+          : {};
+      const currentTabs =
+        currentState.tabs && typeof currentState.tabs === "object" && !Array.isArray(currentState.tabs)
+          ? currentState.tabs
+          : {};
+
+      window.history.replaceState(
+        {
+          ...currentState,
+          tabs: {
+            ...currentTabs,
+            [stateKey]: button.getAttribute("aria-controls"),
+          },
+        },
+        ""
+      );
+    };
+
+    const activateTab = (button, moveFocus = false, saveState = false) => {
       const target = button.getAttribute("aria-controls");
       const activeIndex = buttons.indexOf(button);
 
@@ -537,14 +569,18 @@ function initTabs() {
         panel.hidden = panel.id !== target;
       });
 
+      if (saveState) saveActiveTab(button);
       if (moveFocus) button.focus();
     };
 
-    const initialButton = buttons.find((button) => button.getAttribute("aria-selected") === "true") || buttons[0];
+    const initialButton =
+      getSavedTab() ||
+      buttons.find((button) => button.getAttribute("aria-selected") === "true") ||
+      buttons[0];
     if (initialButton) activateTab(initialButton);
 
     buttons.forEach((button, index) => {
-      button.addEventListener("click", () => activateTab(button));
+      button.addEventListener("click", () => activateTab(button, false, true));
       button.addEventListener("keydown", (event) => {
         let nextIndex = index;
 
@@ -555,8 +591,13 @@ function initTabs() {
         else return;
 
         event.preventDefault();
-        activateTab(buttons[nextIndex], true);
+        activateTab(buttons[nextIndex], true, true);
       });
+    });
+
+    window.addEventListener("pageshow", () => {
+      const savedTab = getSavedTab();
+      if (savedTab) activateTab(savedTab);
     });
   });
 }
