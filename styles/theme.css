@@ -1024,11 +1024,17 @@ body[data-page="home"] .home-difference__list--reasons .home-difference__body p 
   }
 
   body[data-page="home"] .trust-summary-grid .stat {
-    padding-inline: 0.75rem;
+    padding-inline: 0.65rem;
   }
 
   body[data-page="home"][data-lang="zh"] .trust-summary-grid .card__body {
     font-size: 0.84rem;
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1263px) {
+  body[data-page="home"] .trust-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
