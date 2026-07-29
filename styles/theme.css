@@ -1347,6 +1347,10 @@ body[data-page="products"] .product-panel-head .section__description strong {
   max-width: 64rem;
 }
 
+.product-workflow-swipe-hint {
+  display: none;
+}
+
 .product-workflow-figure {
   margin: 0;
   overflow: hidden;
@@ -3332,12 +3336,37 @@ body[data-page="about"] #timeline .section__head {
   }
 
   .product-workflow-figure {
+    -webkit-overflow-scrolling: touch;
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
   }
 
   .product-workflow-figure img {
     width: 56rem;
     max-width: none;
+  }
+
+  .product-workflow-swipe-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: -0.15rem 0 0.75rem;
+    color: var(--primary-deep);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .product-workflow-swipe-hint span {
+    display: inline-grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    flex: 0 0 1.8rem;
+    border: 1px solid rgba(154, 61, 140, 0.24);
+    border-radius: 50%;
+    background: rgba(154, 61, 140, 0.08);
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .reagent-mode-card,
